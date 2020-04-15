@@ -15,7 +15,7 @@ class AccountInfo(Node):
         bank_name: The name of the bank.
     """
 
-    tag = "AcountInfo"
+    tag = "AccountInfo"
 
     def __init__(
         self,

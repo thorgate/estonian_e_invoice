@@ -37,12 +37,11 @@ class VAT(Node):
         }
 
 
-class InvoiceParty(Node):
+class SellerParty(Node):
     """
-    Defines different companies/persons involved with the invoice (the seller and the buyer, the
-    recipient of the invoice, the recipient of the products/services and the payer of the invoice)
+    Defines SellerParty involved with the invoice. Differs from the buyer party
+    by the mandatory register code.
 
-        tag: BuyerParty or SellerParty
         name: Name of the party of the invoice.
         reg_number: Registration number of the party.
         vat_reg_number: VAT registration number of the party.
@@ -50,16 +49,16 @@ class InvoiceParty(Node):
         account_info: Describes the accounts of the party.
     """
 
+    tag = "SellerParty"
+
     def __init__(
         self,
-        tag: str,
         name: str,
         reg_number: str,
         vat_reg_number: Optional[str] = None,
         contact_data: Optional[ContactData] = None,
         account_info: Optional[AccountInfo] = None,
     ) -> None:
-        self.tag = tag
         self.elements = {
             "Name": name,
             "RegNumber": reg_number,
@@ -67,6 +66,25 @@ class InvoiceParty(Node):
             "ContactData": contact_data,
             "AccountInfo": account_info,
         }
+
+
+class BuyerParty(SellerParty):
+    """Defines the buyer of the invoice"""
+
+    tag = "BuyerParty"
+
+    def __init__(
+        self,
+        name: str,
+        reg_number: Optional[str] = None,
+        vat_reg_number: Optional[str] = None,
+        contact_data: Optional[ContactData] = None,
+        account_info: Optional[AccountInfo] = None,
+    ) -> None:
+        super().__init__(
+            name=name, reg_number=reg_number, vat_reg_number=vat_reg_number,
+            contact_data=contact_data, account_info=account_info,
+        )
 
 
 class InvoiceInformation(Node):
@@ -102,14 +120,35 @@ class InvoiceInformation(Node):
         }
 
 
+class ItemDetailInfo(Node):
+    """
+    Detailed information of products/services.
+
+        item_unit: Unit (e.g: h, kg, l, kWh).
+        item_amount: Amount of the products /services.
+        item_price: Price of one product or service (without taxes).
+    """
+
+    tag = "ItemDetailInfo"
+
+    def __init__(
+        self,
+        item_unit: Optional[str] = None,
+        item_amount: Optional[Decimal] = None,
+        item_price: Optional[Decimal] = None,
+    ):
+        self.elements = {
+            "ItemUnit": item_unit,
+            "ItemAmount": item_amount,
+            "ItemPrice": item_price,
+        }
+
+
 class ItemEntry(Node):
     """
     Describes detailed info about one specific invoice row.
 
         description: Product/service/article name or description.
-        item_unit: Unit (e.g: h, kg, l, kWh).
-        item_amount: Amount of the products /services.
-        item_price: Price of one product or service (without taxes).
         item_sum: Total amount without taxes and discount.
         vat: Describes value-added tax
         item_total: Total amount including taxes.
@@ -120,21 +159,17 @@ class ItemEntry(Node):
     def __init__(
         self,
         description: str,
-        item_unit: Optional[str] = None,
-        item_amount: Optional[Decimal] = None,
-        item_price: Optional[Decimal] = None,
         item_sum: Optional[Decimal] = None,
         vat: Optional[VAT] = None,
         item_total: Optional[Decimal] = None,
+        item_detail_info: Optional[ItemDetailInfo] = None,
     ) -> None:
         self.elements = {
             "Description": description,
-            "ItemUnit": item_unit,
-            "ItemAmount": item_amount,
-            "ItemPrice": item_price,
             "ItemSum": item_sum,
             "VAT": vat,
             "ItemTotal": item_total,
+            "ItemDetailInfo": item_detail_info,
         }
 
 
@@ -147,6 +182,7 @@ class InvoiceSumGroup(Node):
         currency: Three-character currency code as specified in ISO 4217.
         total_to_pay: Amout to be paid. Credit invoice must have 0.00.
                       Negative amounts does not correspond to the Estonian legislation.
+        vat: Describes value-added tax.
     """
 
     tag = "InvoiceSumGroup"
@@ -191,17 +227,19 @@ class Invoice(Node):
         service_id: str,
         reg_number: str,
         seller_reg_number: str,
-        seller_party: InvoiceParty,
-        buyer_party: InvoiceParty,
+        seller_party: SellerParty,
+        buyer_party: BuyerParty,
         invoice_information: InvoiceInformation,
         invoice_sum_group: InvoiceSumGroup,
         invoice_item_entries: List[ItemEntry],
     ) -> None:
+        self.attributes = {
+            "invoiceId": invoice_id,
+            "serviceId": service_id,
+            "regNumber": reg_number,
+            "sellerRegnumber": seller_reg_number,
+        }
         self.elements = {
-            "InvoiceID": invoice_id,
-            "ServiceID": service_id,
-            "RegNumber": reg_number,
-            "SellerRegNumber": seller_reg_number,
             "InvoiceParties": [seller_party, buyer_party],
             "InvoiceInformation": invoice_information,
             "InvoiceSumGroup": invoice_sum_group,
