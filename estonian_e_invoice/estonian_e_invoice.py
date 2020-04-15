@@ -3,7 +3,7 @@ from xml.dom import minidom
 from xml.etree import ElementTree
 
 from entities.file import Footer, Header
-from entities.invoice import Invoice, InvoiceParty, InvoiceInformation, InvoiceSumGroup, ItemEntry
+from entities.invoice import Invoice
 
 
 class XMLGenerator:
