@@ -3,10 +3,11 @@ from decimal import Decimal
 from typing import Optional, List
 
 from entities.account import AccountInfo, PaymentInfo
+from entities.common import Node
 from entities.contact import ContactData
 
 
-class VAT:
+class VAT(Node):
     """
     Describes value-added tax.
 
@@ -17,6 +18,8 @@ class VAT:
         sum_after_vat: Amount with VAT amount.
     """
 
+    tag = "Vat"
+
     def __init__(
         self,
         vat_rate: Decimal,
@@ -25,54 +28,48 @@ class VAT:
         sum_after_vat: Optional[Decimal] = None,
         total_vat_sum: Optional[Decimal] = None,
     ) -> None:
-        self.vat_rate = vat_rate
-        self.vat_sum = vat_sum
-        self.sum_before_vat = sum_before_vat
-        self.sum_after_var = sum_after_vat
-        self.total_vat_sum = total_vat_sum
+        self.elements = {
+            "VATRate": vat_rate,
+            "VATSum": vat_sum,
+            "SumBeforeVAT": sum_before_vat,
+            "SumAfterVAT": sum_after_vat,
+            "TotalVATSum": total_vat_sum,
+        }
 
 
-class InvoiceParty:
+class InvoiceParty(Node):
     """
     Defines different companies/persons involved with the invoice (the seller and the buyer, the
     recipient of the invoice, the recipient of the products/services and the payer of the invoice)
 
+        tag: BuyerParty or SellerParty
         name: Name of the party of the invoice.
         reg_number: Registration number of the party.
-        gln: Party’s GLN-code.
-        transaction_partner_code: Transaction partner code issued by Estonian government.
-        unique_code: Unique code of the party (e.g: client number).
-        dep_id: Department identifier (e.g: sales).
         vat_reg_number: VAT registration number of the party.
         contact_data: Contact information of the party (phone number, e-mail, address).
         account_info: Describes the accounts of the party.
-        extension: Describes additional information elements.
     """
 
     def __init__(
         self,
+        tag: str,
         name: str,
         reg_number: str,
-        gln: Optional[str] = None,
-        transaction_partner_code: Optional[str] = None,
-        unique_code: Optional[str] = None,
-        dep_id: Optional[str] = None,
         vat_reg_number: Optional[str] = None,
         contact_data: Optional[ContactData] = None,
         account_info: Optional[AccountInfo] = None,
     ) -> None:
-        self.name = name
-        self.reg_number = reg_number
-        self.gln = gln
-        self.transaction_partner_code = transaction_partner_code
-        self.unique_code = unique_code
-        self.dep_id = dep_id
-        self.vat_reg_number = vat_reg_number
-        self.contact_data = contact_data
-        self.account_info = account_info
+        self.tag = tag
+        self.elements = {
+            "Name": name,
+            "RegNumber": reg_number,
+            "VATRegNumber": vat_reg_number,
+            "ContactData": contact_data,
+            "AccountInfo": account_info,
+        }
 
 
-class InvoiceInformation:
+class InvoiceInformation(Node):
     """
     Contains general invoice specific information about the invoice, like invoice number and dates.
 
@@ -80,17 +77,11 @@ class InvoiceInformation:
         invoice_number: Number of invoice,
         invoice_date: datetime.date,
         document_name: str,
-        source_invoice: Optional[str] = None,
-        factor_contract_number: Optional[str] = None,
-        contract_number: Optional[str] = None,
-        invoice_content_code: Optional[str] = None,
-        invoice_content_text: Optional[str] = None,
-        payment_reference_number: Optional[str] = None,
-        payment_method: Optional[str] = None,
         due_date: Optional[datetime.date] = None,
-        payment_term: Optional[str] = None,
         fine_rate_per_day: Optional[Decimal] = None,
     """
+
+    tag = "InvoiceInformation"
 
     def __init__(
         self,
@@ -98,34 +89,20 @@ class InvoiceInformation:
         invoice_number: str,
         invoice_date: datetime.date,
         document_name: str,
-        source_invoice: Optional[str] = None,
-        factor_contract_number: Optional[str] = None,
-        contract_number: Optional[str] = None,
-        invoice_content_code: Optional[str] = None,
-        invoice_content_text: Optional[str] = None,
-        payment_reference_number: Optional[str] = None,
-        payment_method: Optional[str] = None,
         due_date: Optional[datetime.date] = None,
-        payment_term: Optional[str] = None,
         fine_rate_per_day: Optional[Decimal] = None,
     ) -> None:
-        self.invoice_type = invoice_type
-        self.invoice_number = invoice_number
-        self.invoice_date = invoice_date
-        self.document_name = document_name
-        self.source_invoice = source_invoice
-        self.factor_contract_number = factor_contract_number
-        self.contract_number = contract_number
-        self.invoice_content_code = invoice_content_code
-        self.invoice_content_text = invoice_content_text
-        self.payment_reference_number = payment_reference_number
-        self.payment_method = payment_method
-        self.due_date = due_date
-        self.payment_term = payment_term
-        self.fine_rate_per_day = fine_rate_per_day
+        self.elements = {
+            "Type": invoice_type,
+            "InvoiceNumber": invoice_number,
+            "InvoiceDate": invoice_date,
+            "DocumentName": document_name,
+            "DueDate": due_date,
+            "FineRatePerDay": fine_rate_per_day,
+        }
 
 
-class ItemEntry:
+class ItemEntry(Node):
     """
     Describes detailed info about one specific invoice row.
 
@@ -138,6 +115,8 @@ class ItemEntry:
         item_total: Total amount including taxes.
     """
 
+    tag = "ItemEntry"
+
     def __init__(
         self,
         description: str,
@@ -148,16 +127,18 @@ class ItemEntry:
         vat: Optional[VAT] = None,
         item_total: Optional[Decimal] = None,
     ) -> None:
-        self.description = description
-        self.item_unit = item_unit
-        self.item_amount = item_amount
-        self.item_price = item_price
-        self.item_sum = item_sum
-        self.vat = vat
-        self.item_total = item_total
+        self.elements = {
+            "Description": description,
+            "ItemUnit": item_unit,
+            "ItemAmount": item_amount,
+            "ItemPrice": item_price,
+            "ItemSum": item_sum,
+            "VAT": vat,
+            "ItemTotal": item_total,
+        }
 
 
-class InvoiceSumGroup:
+class InvoiceSumGroup(Node):
     """
     Contains invoiced amounts (total sum, sum_before_var etc).
 
@@ -168,6 +149,8 @@ class InvoiceSumGroup:
                       Negative amounts does not correspond to the Estonian legislation.
     """
 
+    tag = "InvoiceSumGroup"
+
     def __init__(
         self,
         total_sum: Decimal,
@@ -176,18 +159,31 @@ class InvoiceSumGroup:
         total_to_pay: Optional[Decimal] = None,
         vat: Optional[VAT] = None,
     ) -> None:
-        self.total_sum = total_sum
-        self.invoice_sum = invoice_sum
-        self.currency = currency
-        self.total_to_pay = total_to_pay
-        self.vat = vat
+        self.elements = {
+            "TotalSum": total_sum,
+            "InvoiceSum": invoice_sum,
+            "Currency": currency,
+            "TotalToPay": total_to_pay,
+            "VAT": vat,
+        }
 
 
-class Invoice:
+class Invoice(Node):
     """
     Contains information about one specific invoice.
 
+        invoice_id: Unique id of the invoice (on the scope of one file).
+        service_id: Client identification number (reference number, client code, client number etc.) in sellers system.
+        reg_number: Personal ID/registration code of the invoice receiver.
+        seller_reg_number: Seller’s registration number.
+        seller_party: Sender of the invoice.
+        buyer_party: Receiver of the invoice.
+        invoice_information: Contains general information about the invoice.
+        invoice_sum_group: Information block for invoiced amounts.
+        invoice_item: Contains detailed information about the invoice rows.
     """
+
+    tag = "Invoice"
 
     def __init__(
         self,
@@ -201,12 +197,13 @@ class Invoice:
         invoice_sum_group: InvoiceSumGroup,
         invoice_item_entries: List[ItemEntry],
     ) -> None:
-        self.invoice_id = invoice_id
-        self.service_id = service_id
-        self.reg_number = reg_number
-        self.seller_reg_number = seller_reg_number
-        self.seller_party = seller_party
-        self.buyer_party = buyer_party
-        self.invoice_information = invoice_information
-        self.invoice_sum_group = invoice_sum_group
-        self.invoice_items = invoice_item_entries
+        self.elements = {
+            "InvoiceID": invoice_id,
+            "ServiceID": service_id,
+            "RegNumber": reg_number,
+            "SellerRegNumber": seller_reg_number,
+            "InvoiceParties": [seller_party, buyer_party],
+            "InvoiceInformation": invoice_information,
+            "InvoiceSumGroup": invoice_sum_group,
+            "InvoiceItem": invoice_item_entries,
+        }

@@ -1,10 +1,13 @@
 from typing import Optional
 
+from entities.common import Node
 
-class AddressRecord:
+
+class AddressRecord(Node):
     """
     Describes the address of the invoice parties.
 
+        tag: XML element tag
         postal_address_1: Street, house, apartment.
         postal_address_2: Village, postal office, etc.
         city: City or county.
@@ -14,20 +17,24 @@ class AddressRecord:
 
     def __init__(
         self,
+        tag: str,
         postal_address_1: str,
-        city: str = None,
+        city: str,
         postal_address_2: Optional[str] = None,
         postal_code: Optional[str] = None,
         country: Optional[str] = None,
     ) -> None:
-        self.postal_address_1 = postal_address_1
-        self.city = city
-        self.postal_address_2 = postal_address_2
-        self.postal_code = postal_code
-        self.country = country
+        self.tag = tag
+        self.elements = {
+            "PostalAddress1": postal_address_1,
+            "City": city,
+            "PostalAddress2": postal_address_2,
+            "PostalCode": postal_code,
+            "Country": country,
+        }
 
 
-class ContactData:
+class ContactData(Node):
     """
     Describes the contacts of the invoice parties.
 
@@ -41,6 +48,8 @@ class ContactData:
         mail_address: Describes the postal address of the party.
     """
 
+    tag = "ContactData"
+
     def __init__(
         self,
         contact_name: Optional[str] = None,
@@ -52,11 +61,13 @@ class ContactData:
         legal_address: Optional[AddressRecord] = None,
         mail_address: Optional[AddressRecord] = None,
     ) -> None:
-        self.contact_name = contact_name
-        self.contact_person_code = contact_person_code
-        self.phone_number = phone_number
-        self.fax_number = fax_number
-        self.url = url
-        self.email_address = email_address
-        self.legal_address = legal_address
-        self.mail_address = mail_address
+        self.elements = {
+            "ContactName": contact_name,
+            "ContactPersonCode": contact_person_code,
+            "PhoneNumber": phone_number,
+            "FaxNumber": fax_number,
+            "URL": url,
+            "EmailAddress": email_address,
+            "LegalAddress": legal_address,
+            "MailAddress": mail_address,
+        }

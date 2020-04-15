@@ -2,8 +2,10 @@ import datetime
 from decimal import Decimal
 from typing import Optional
 
+from entities.common import Node
 
-class AccountInfo:
+
+class AccountInfo(Node):
     """
     Describes the accounts of a party.
 
@@ -13,6 +15,8 @@ class AccountInfo:
         bank_name: The name of the bank.
     """
 
+    tag = "AcountInfo"
+
     def __init__(
         self,
         account_number: str,
@@ -20,13 +24,15 @@ class AccountInfo:
         bic: Optional[str] = None,
         bank_name: Optional[str] = None,
     ) -> None:
-        self.account_number = account_number
-        self.iban = iban
-        self.bic = bic
-        self.bank_name = bank_name
+        self.elements = {
+            "AccountNumber": account_number,
+            "IBAN": iban,
+            "BIC": bic,
+            "BankName": bank_name,
+        }
 
 
-class PaymentInfo:
+class PaymentInfo(Node):
     """
     Describes the information used for generating payment order form from the invoice.
 
@@ -41,6 +47,8 @@ class PaymentInfo:
         payment_due_date: Payment due date.
     """
 
+    tag = "PaymentInfo"
+
     def __init__(
         self,
         currency: str,
@@ -53,12 +61,14 @@ class PaymentInfo:
         pay_to_name: str,
         payment_due_date: Optional[datetime.date] = None,
     ) -> None:
-        self.currency = currency
-        self.payment_description = payment_description
-        self.payable = payable
-        self.payment_due_date = payment_due_date
-        self.payment_total_sum = payment_total_sum
-        self.payer_name = payer_name
-        self.payment_id = payment_id
-        self.pay_to_account = pay_to_account
-        self.pay_to_name = pay_to_name
+        self.elements = {
+            "Currency": currency,
+            "PaymentDescription": payment_description,
+            "Payable": payable,
+            "PaymentDueDate": payment_due_date,
+            "PaymentTotalSum": payment_total_sum,
+            "PayerName": payer_name,
+            "PaymentID": payment_id,
+            "PayToAccount": pay_to_account,
+            "PayToName": pay_to_name,
+        }
