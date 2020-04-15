@@ -1,6 +1,6 @@
 from typing import Optional
 
-from entities.common import Node
+from estonian_e_invoice.entities.common import Node
 
 
 class AddressRecord(Node):

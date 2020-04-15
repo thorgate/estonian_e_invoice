@@ -1,6 +1,6 @@
 from cerberus import Validator
 
-from validation.validator_custom_types import DECIMAL_TYPE
+from estonian_e_invoice.validation.validator_custom_types import DECIMAL_TYPE
 
 
 class BaseValidator(Validator):

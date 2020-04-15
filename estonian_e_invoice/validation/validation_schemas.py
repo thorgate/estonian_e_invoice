@@ -1,4 +1,4 @@
-from validation.validation_schema_types import *
+from estonian_e_invoice.validation.validation_schema_types import *
 
 
 HEADER_VALIDATION_SCHEMA = {

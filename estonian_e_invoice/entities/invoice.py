@@ -2,9 +2,9 @@ import datetime
 from decimal import Decimal
 from typing import Optional, List
 
-from entities.account import AccountInfo, PaymentInfo
-from entities.common import Node
-from entities.contact import ContactData
+from estonian_e_invoice.entities.account import AccountInfo, PaymentInfo
+from estonian_e_invoice.entities.common import Node
+from estonian_e_invoice.entities.contact import ContactData
 
 
 class VAT(Node):

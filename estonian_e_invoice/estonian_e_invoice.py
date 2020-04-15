@@ -2,8 +2,8 @@
 from xml.dom import minidom
 from xml.etree import ElementTree
 
-from entities.file import Footer, Header
-from entities.invoice import Invoice
+from estonian_e_invoice.entities.file import Footer, Header
+from estonian_e_invoice.entities.invoice import Invoice
 
 
 class XMLGenerator:

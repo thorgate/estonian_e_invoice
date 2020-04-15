@@ -1,7 +1,7 @@
 import datetime
 from decimal import Decimal
 
-from entities.common import Node
+from estonian_e_invoice.entities.common import Node
 
 
 class Header(Node):
