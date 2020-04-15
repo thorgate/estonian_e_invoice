@@ -82,8 +82,11 @@ class BuyerParty(SellerParty):
         account_info: Optional[AccountInfo] = None,
     ) -> None:
         super().__init__(
-            name=name, reg_number=reg_number, vat_reg_number=vat_reg_number,
-            contact_data=contact_data, account_info=account_info,
+            name=name,
+            reg_number=reg_number,
+            vat_reg_number=vat_reg_number,
+            contact_data=contact_data,
+            account_info=account_info,
         )
 
 

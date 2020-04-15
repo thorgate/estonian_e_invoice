@@ -24,18 +24,13 @@ class XMLGenerator:
         root.set("xsi:noNamespaceSchemaLocation", "e-invoice_ver1.2.xsd")
         root.set("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance")
 
-    @staticmethod
-    def add_root_nodes(root):
-        header_element = header.to_etree()
-        footer_element = footer.to_etree()
-        invoice_element = invoice.to_etree()
-
-        root.append(header_element)
-        root.append(invoice_element)
-        root.append(footer_element)
+    def add_nodes_to_root(self, root):
+        root.extend(
+            [self.header, self.invoice, self.footer,]
+        )
 
     def generate(self):
         root = ElementTree.Element("E_Invoice")
         self.set_root_attrs(root)
-        self.add_root_nodes(root)
+        self.add_nodes_to_root(root)
         return self.prettify(root)

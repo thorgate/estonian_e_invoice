@@ -70,9 +70,7 @@ DECIMAL_TYPE_REQUIRED = {
     "required": True,
 }
 
-BOOLEAN_TYPE = {
-    "type": "boolean"
-}
+BOOLEAN_TYPE = {"type": "boolean"}
 
 BOOLEAN_TYPE_REQUIRED = {
     "type": "boolean",
