@@ -22,7 +22,7 @@ deploy:
   distributions: sdist bdist_wheel
   user: burakozdemir
   password:
-    secure: PLEASE_REPLACE_ME
+    secure: xaVtS4KEhUDxdycpef3Cks/t695W03440nSzclc1t/yOcXnGzYXMYdaLuPCu9rAVAPGuur52n4usONRmW8f6rVYxLyxd+SnNwwkK58QY4E7sQhlUCkgUTDWxyfj+FYpBURqIxsP7HUb6qkmn2ewsvNnN5+yqbXhBcbuGOAsDOBFI465dBVAz/le+ncOFmI6HpVXA5y9v76zubb0UlTVU0fOTushenyp+OqJHdyxOw+RVlhADUC1VzqtmvXO0hCWwqCZbZ/mgn1iz7A3JrHu32kwBDMo1eHIyxU3oOY+N1J8wezl3ry2M8fD2jJvJx9xfv5nTubAvwr8lAwxmCMfT+r2A20QpVPr2dSzJsbLNL4w8F1vJU5+IfGsBcOzmgh0PhznDYQNWtFHv7IbtvlPs9sd1/qreqLUiUe3WIxCvZXnDYqO1wuTmVEUJ3JViF9N04f8bY7/mYvvmJLQc6RHMcohwT2IofpA93AdlW2yJDZMusQq0+q341mTDPj4NhEHK4ViXPTTWUnAVjKXX/m07uA283uOrdalvjE4KyEO9JoNZAD+m28xr2lyXVQBC/YObOKQJtcEr3zgG6va7hURalA7BipRQubA9oa3Gvz6nzSiOkxs4Z9rQxaOEe46pX5OQfQDLnTj/tX+cZsSKNHaXzbzs+8W9uRxNfbIWqld0wwQ=
   on:
     tags: true
     repo: burakozdemir32/estonian_e_invoice
