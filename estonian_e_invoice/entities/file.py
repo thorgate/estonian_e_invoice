@@ -1,7 +1,10 @@
-import datetime
 from decimal import Decimal
 
-from estonian_e_invoice.entities.common import Node
+from estonian_e_invoice.entities import Node
+from estonian_e_invoice.validation.validation_schemas import (
+    HEADER_SCHEMA,
+    FOOTER_SCHEMA,
+)
 
 
 class Header(Node):
@@ -14,13 +17,12 @@ class Header(Node):
     """
 
     tag = "Header"
+    validation_schema = HEADER_SCHEMA
 
-    def __init__(self, date: datetime.date, file_id: str, version: str,) -> None:
-        self.elements = {
-            "Date": date,
-            "FileID": file_id,
-            "Version": version,
-        }
+    def __init__(self, date: str, file_id: str, version: str,) -> None:
+        self.elements = self.validate(
+            {"Date": date, "FileID": file_id, "Version": version,}
+        )
 
 
 class Footer(Node):
@@ -32,9 +34,9 @@ class Footer(Node):
     """
 
     tag = "Footer"
+    validation_schema = FOOTER_SCHEMA
 
     def __init__(self, invoices_count: int, total_amount: Decimal) -> None:
-        self.elements = {
-            "TotalNumberInvoices": invoices_count,
-            "TotalAmount": total_amount,
-        }
+        self.elements = self.validate(
+            {"TotalNumberInvoices": invoices_count, "TotalAmount": total_amount,}
+        )

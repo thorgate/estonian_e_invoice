@@ -1,8 +1,11 @@
-import datetime
 from decimal import Decimal
 from typing import Optional
 
-from estonian_e_invoice.entities.common import Node
+from estonian_e_invoice.entities import Node
+from estonian_e_invoice.validation.validation_schemas import (
+    ACCOUNT_INFO_SCHEMA,
+    PAYMENT_INFO_SCHEMA,
+)
 
 
 class AccountInfo(Node):
@@ -16,6 +19,7 @@ class AccountInfo(Node):
     """
 
     tag = "AccountInfo"
+    validation_schema = ACCOUNT_INFO_SCHEMA
 
     def __init__(
         self,
@@ -24,12 +28,14 @@ class AccountInfo(Node):
         bic: Optional[str] = None,
         bank_name: Optional[str] = None,
     ) -> None:
-        self.elements = {
-            "AccountNumber": account_number,
-            "IBAN": iban,
-            "BIC": bic,
-            "BankName": bank_name,
-        }
+        self.elements = self.validate(
+            {
+                "AccountNumber": account_number,
+                "IBAN": iban,
+                "BIC": bic,
+                "BankName": bank_name,
+            }
+        )
 
 
 class PaymentInfo(Node):
@@ -48,6 +54,7 @@ class PaymentInfo(Node):
     """
 
     tag = "PaymentInfo"
+    validation_schema = PAYMENT_INFO_SCHEMA
 
     def __init__(
         self,
@@ -59,16 +66,18 @@ class PaymentInfo(Node):
         payment_id: str,
         pay_to_account: str,
         pay_to_name: str,
-        payment_due_date: Optional[datetime.date] = None,
+        payment_due_date: Optional[str] = None,
     ) -> None:
-        self.elements = {
-            "Currency": currency,
-            "PaymentDescription": payment_description,
-            "Payable": payable,
-            "PaymentDueDate": payment_due_date,
-            "PaymentTotalSum": payment_total_sum,
-            "PayerName": payer_name,
-            "PaymentID": payment_id,
-            "PayToAccount": pay_to_account,
-            "PayToName": pay_to_name,
-        }
+        self.elements = self.validate(
+            {
+                "Currency": currency,
+                "PaymentDescription": payment_description,
+                "Payable": payable,
+                "PaymentTotalSum": payment_total_sum,
+                "PayerName": payer_name,
+                "PaymentID": payment_id,
+                "PayToAccount": pay_to_account,
+                "PayToName": pay_to_name,
+                "PaymentDueDate": payment_due_date,
+            }
+        )

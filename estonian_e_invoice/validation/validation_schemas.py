@@ -1,112 +1,128 @@
 from estonian_e_invoice.validation.validation_schema_types import *
 
 
-HEADER_VALIDATION_SCHEMA = {
-    "date": DATE_TYPE_REQUIRED,
-    "file_id": SHORT_STRING_TYPE_REQUIRED,
-    "version": SHORT_STRING_TYPE_REQUIRED,
+HEADER_SCHEMA = {
+    "Date": DATE_STRING_TYPE_REQUIRED,
+    "FileID": SHORT_STRING_TYPE_REQUIRED,
+    "Version": SHORT_STRING_TYPE_REQUIRED,
 }
 
-FOOTER_VALIDATION_SCHEMA = {
-    "invoices_count": INTEGER_TYPE_REQUIRED,
-    "total_amount": DECIMAL_TYPE_REQUIRED,
+FOOTER_SCHEMA = {
+    "TotalNumberInvoices": INTEGER_TYPE_REQUIRED,
+    "TotalAmount": DECIMAL_TYPE_TWO_DECIMAL_PLACES_REQUIRED,
 }
 
-ACCOUNT_INFO_VALIDATION_SCHEMA = {
-    "account_number": ACCOUNT_TYPE_REQUIRED,
-    "iban": ACCOUNT_TYPE,
-    "bic": {**STRING_TYPE, "max_length": 11,},
-    "bank_name": NORMAL_STRING_TYPE,
+ACCOUNT_INFO_SCHEMA = {
+    "AccountNumber": ACCOUNT_TYPE_REQUIRED,
+    "IBAN": ACCOUNT_TYPE,
+    "BIC": {**STRING_TYPE, "maxlength": 11,},
+    "BankName": NORMAL_STRING_TYPE,
 }
 
-PAYMENT_INFO_VALIDATION_SCHEMA = {
-    "currency": CURRENCY_TYPE_REQUIRED,
-    "payment_description": {**STRING_TYPE_REQUIRED, "max_length": 210,},
-    "payable": BOOLEAN_TYPE_REQUIRED,
-    "payment_total_sum": DECIMAL_TYPE_REQUIRED,
-    "payer_name": NORMAL_STRING_TYPE_REQUIRED,
-    "payment_id": NORMAL_STRING_TYPE_REQUIRED,
-    "pay_to_account": ACCOUNT_TYPE_REQUIRED,
-    "pay_to_name": SHORT_STRING_TYPE_REQUIRED,
-    "payment_due_date": DATE_TYPE,
+PAYMENT_INFO_SCHEMA = {
+    "Currency": CURRENCY_TYPE_REQUIRED,
+    "PaymentDescription": {**STRING_TYPE_REQUIRED, "maxlength": 210,},
+    "Payable": {
+        **SHORT_STRING_TYPE_REQUIRED,
+        "coerce": "to_yes_no",
+        "allowed": ["YES", "NO",],
+    },
+    "PaymentTotalSum": DECIMAL_TYPE_TWO_DECIMAL_PLACES_REQUIRED,
+    "PayerName": NORMAL_STRING_TYPE_REQUIRED,
+    "PaymentID": NORMAL_STRING_TYPE_REQUIRED,
+    "PayToAccount": ACCOUNT_TYPE_REQUIRED,
+    "PayToName": SHORT_STRING_TYPE_REQUIRED,
+    "PaymentDueDate": DATE_STRING_TYPE,
 }
 
-ADDRESS_RECORD_VALIDATION_SCHEMA = {
-    "tag": NORMAL_STRING_TYPE_REQUIRED,
-    "postal_address_1": NORMAL_STRING_TYPE_REQUIRED,
-    "postal_address_2": NORMAL_STRING_TYPE,
-    "city": NORMAL_STRING_TYPE_REQUIRED,
-    "postal_code": {**STRING_TYPE, "max_length": 10,},
+ADDRESS_RECORD_SCHEMA = {
+    "PostalAddress1": NORMAL_STRING_TYPE_REQUIRED,
+    "PostalAddress2": NORMAL_STRING_TYPE,
+    "City": NORMAL_STRING_TYPE_REQUIRED,
+    "PostalCode": {**STRING_TYPE, "maxlength": 10,},
 }
 
-CONTACT_DATA_VALIDATION_SCHEMA = {
-    "contact_name": NORMAL_STRING_TYPE,
-    "contact_person_code": REG_TYPE,
-    "phone_number": NORMAL_STRING_TYPE,
-    "fax_number": NORMAL_STRING_TYPE,
-    "url": NORMAL_STRING_TYPE,
-    "email_address": {
+CONTACT_DATA_SCHEMA = {
+    "ContactName": NORMAL_STRING_TYPE,
+    "ContactPersonCode": REG_TYPE,
+    "PhoneNumber": NORMAL_STRING_TYPE,
+    "FaxNumber": NORMAL_STRING_TYPE,
+    "URL": NORMAL_STRING_TYPE,
+    "EmailAddress": {
         **STRING_TYPE,
         "regex": ".+@.+",  # From the documentation, not a real good regex for emails.
     },
+    "LegalAddress": NODE_TYPE,
 }
 
-VAT_VALIDATION_SCHEMA = {
-    "vat_rate": DECIMAL_TYPE_REQUIRED,
-    "vat_sum": DECIMAL_TYPE_REQUIRED,
-    "sum_before_vat": DECIMAL_TYPE,
-    "sum_after_vat": DECIMAL_TYPE,
-    "total_vat_sum": DECIMAL_TYPE,
+VAT_SCHEMA = {
+    "VATRate": DECIMAL_TYPE_TWO_DECIMAL_PLACES_REQUIRED,
+    "VATSum": DECIMAL_TYPE_FOUR_DECIMAL_PLACES_REQUIRED,
+    "SumBeforeVAT": DECIMAL_TYPE_FOUR_DECIMAL_PLACES,
+    "SumAfterVAT": DECIMAL_TYPE_FOUR_DECIMAL_PLACES,
+    "Currency": CURRENCY_TYPE,
 }
-
 
 SELLER_PARTY_SCHEMA = {
-    "name": NORMAL_STRING_TYPE_REQUIRED,
-    "reg_number": REG_TYPE_REQUIRED,
-    "vat_reg_number": REG_TYPE,
+    "Name": NORMAL_STRING_TYPE_REQUIRED,
+    "RegNumber": REG_TYPE_REQUIRED,
+    "VATRegNumber": REG_TYPE,
+    "ContactData": NODE_TYPE,
+    "AccountInfo": NODE_TYPE,
 }
 
 BUYER_PARTY_SCHEMA = {
     **SELLER_PARTY_SCHEMA,
-    "reg_number": REG_TYPE,
+    "RegNumber": REG_TYPE,
 }
 
 INVOICE_INFORMATION_SCHEMA = {
-    "invoice_type": {
-        **STRING_TYPE_REQUIRED,
-        "max_length": 3,
-        "allowed": ["DEB", "CRE",],
-    },
-    "invoice_number": NORMAL_STRING_TYPE_REQUIRED,
-    "invoice_date": DATE_TYPE_REQUIRED,
-    "document_name": NORMAL_STRING_TYPE_REQUIRED,
-    "due_date": DATE_TYPE,
-    "fine_rate_per_day": DECIMAL_TYPE,
+    "Type": NODE_TYPE_REQUIRED,
+    "InvoiceNumber": NORMAL_STRING_TYPE_REQUIRED,
+    "InvoiceDate": DATE_STRING_TYPE_REQUIRED,
+    "DocumentName": NORMAL_STRING_TYPE_REQUIRED,
+    "DueDate": DATE_STRING_TYPE,
+    "FineRatePerDay": DECIMAL_TYPE_TWO_DECIMAL_PLACES,
 }
 
-
 ITEM_DETAIL_INFO_SCHEMA = {
-    "item_unit": SHORT_STRING_TYPE,
-    "item_amount": DECIMAL_TYPE,
-    "item_price": DECIMAL_TYPE,
+    "ItemUnit": SHORT_STRING_TYPE,
+    "ItemAmount": DECIMAL_TYPE_FOUR_DECIMAL_PLACES,
+    "ItemPrice": DECIMAL_TYPE_FOUR_DECIMAL_PLACES,
 }
 
 ITEM_ENTRY_SCHEMA = {
-    "description": LONG_STRING_TYPE_REQUIRED,
-    "item_sum": DECIMAL_TYPE,
-    "item_total": DECIMAL_TYPE,
+    "Description": LONG_STRING_TYPE_REQUIRED,
+    "ItemSum": DECIMAL_TYPE_FOUR_DECIMAL_PLACES,
+    "ItemTotal": DECIMAL_TYPE_FOUR_DECIMAL_PLACES,
+    "ItemDetailInfo": NODE_TYPE,
 }
 
-INVOICE_SUM_GROUP_VALIDATION_SCHEMA = {
-    "total_sum": DECIMAL_TYPE_REQUIRED,
-    "invoice_sum": DECIMAL_TYPE,
-    "currency": CURRENCY_TYPE,
-    "total_to_pay": DECIMAL_TYPE,
+INVOICE_SUM_GROUP_SCHEMA = {
+    "TotalSum": DECIMAL_TYPE_TWO_DECIMAL_PLACES_REQUIRED,
+    "InvoiceSum": DECIMAL_TYPE_FOUR_DECIMAL_PLACES,
+    "Currency": CURRENCY_TYPE,
+    "TotalToPay": DECIMAL_TYPE_TWO_DECIMAL_PLACES,
+    "VAT": NODE_TYPE,
 }
 
-INVOICE_VALIDATION_SCHEMA = {
-    "invoice_id": NORMAL_STRING_TYPE_REQUIRED,
-    "service_id": SHORT_STRING_TYPE_REQUIRED,
-    "reg_number": REG_TYPE_REQUIRED,
-    "seller_reg_number": REG_TYPE_REQUIRED,
+INVOICE_ITEM_GROUP_SCHEMA = {
+    "ItemEntry": {"type": "list", "schema": {"type": "node",}, "required": True,}
+}
+
+INVOICE_TYPE_VALIDATION_SCHEMA = {
+    "Type": {**STRING_TYPE_REQUIRED, "maxlength": 3, "allowed": ["DEB", "CRE",],},
+    "SourceInvoice": SHORT_STRING_TYPE,
+}
+
+INVOICE_SCHEMA = {
+    "invoiceId": NORMAL_STRING_TYPE_REQUIRED,
+    "serviceId": SHORT_STRING_TYPE_REQUIRED,
+    "regNumber": REG_TYPE_REQUIRED,
+    "sellerRegnumber": REG_TYPE_REQUIRED,
+    "InvoiceParties": {"type": "list", "schema": {"type": "node",}, "required": True,},
+    "InvoiceInformation": NODE_TYPE_REQUIRED,
+    "InvoiceSumGroup": NODE_TYPE_REQUIRED,
+    "InvoiceItemGroup": NODE_TYPE_REQUIRED,
+    "PaymentInfo": NODE_TYPE_REQUIRED,
 }

@@ -1,55 +1,51 @@
-DATE_TYPE = {
-    "type": "date",
-    "required": False,
-}
-
-DATE_TYPE_REQUIRED = {
-    **DATE_TYPE,
-    "required": True,
-}
-
 STRING_TYPE = {
     "type": "string",
-    "required": False,
+    "empty": False,
 }
 
 STRING_TYPE_REQUIRED = {
-    "type": "string",
+    **STRING_TYPE,
     "required": True,
-    "empty": False,
 }
 
 SHORT_STRING_TYPE = {
     **STRING_TYPE,
-    "max_length": 20,
+    "maxlength": 20,
 }
 
 SHORT_STRING_TYPE_REQUIRED = {
     **SHORT_STRING_TYPE,
     "required": True,
-    "empty": False,
 }
 
 NORMAL_STRING_TYPE = {
     **STRING_TYPE,
-    "max_length": 100,
+    "maxlength": 100,
 }
 
 NORMAL_STRING_TYPE_REQUIRED = {
     **NORMAL_STRING_TYPE,
     "required": True,
-    "empty": False,
 }
 
 LONG_STRING_TYPE = {
     **STRING_TYPE,
-    "max_length": 500,
+    "maxlength": 500,
 }
 
 LONG_STRING_TYPE_REQUIRED = {
     **LONG_STRING_TYPE,
     "required": True,
-    "empty": False,
+}
+
+DATE_STRING_TYPE = {
+    **SHORT_STRING_TYPE,
+    "check_with": "date_string",
+}
+
+DATE_STRING_TYPE_REQUIRED = {
+    **DATE_STRING_TYPE,
+    "required": True,
 }
 
 INTEGER_TYPE = {
@@ -57,7 +53,7 @@ INTEGER_TYPE = {
 }
 
 INTEGER_TYPE_REQUIRED = {
-    "type": "integer",
+    **INTEGER_TYPE,
     "required": True,
 }
 
@@ -66,48 +62,67 @@ DECIMAL_TYPE = {
 }
 
 DECIMAL_TYPE_REQUIRED = {
-    "type": "decimal",
+    **DECIMAL_TYPE,
     "required": True,
 }
 
-BOOLEAN_TYPE = {"type": "boolean"}
+DECIMAL_TYPE_TWO_DECIMAL_PLACES = {
+    **DECIMAL_TYPE,
+    "coerce": "two_decimal_places",
+}
 
-BOOLEAN_TYPE_REQUIRED = {
-    "type": "boolean",
+DECIMAL_TYPE_TWO_DECIMAL_PLACES_REQUIRED = {
+    **DECIMAL_TYPE_TWO_DECIMAL_PLACES,
+    "required": True,
+}
+
+DECIMAL_TYPE_FOUR_DECIMAL_PLACES = {
+    **DECIMAL_TYPE,
+    "coerce": "four_decimal_places",
+}
+
+DECIMAL_TYPE_FOUR_DECIMAL_PLACES_REQUIRED = {
+    **DECIMAL_TYPE_FOUR_DECIMAL_PLACES,
     "required": True,
 }
 
 ACCOUNT_TYPE = {
     **STRING_TYPE,
-    "max_length": 35,
+    "maxlength": 35,
     "regex": "([0-9|A-Z])*",
 }
 
 ACCOUNT_TYPE_REQUIRED = {
-    **STRING_TYPE_REQUIRED,
-    "max_length": 35,
-    "regex": "([0-9|A-Z])*",
+    **ACCOUNT_TYPE,
+    "required": True,
 }
 
 REG_TYPE = {
     **STRING_TYPE,
-    "max_length": 15,
+    "maxlength": 15,
 }
 
 REG_TYPE_REQUIRED = {
     **REG_TYPE,
     "required": True,
-    "empty": False,
 }
 
 CURRENCY_TYPE = {
     **STRING_TYPE,
-    "max_length": 3,
+    "maxlength": 3,
     "regex": "[A-Z][A-Z][A-Z]",
 }
 
 CURRENCY_TYPE_REQUIRED = {
     **CURRENCY_TYPE,
     "required": True,
-    "empty": False,
+}
+
+NODE_TYPE = {
+    "type": "node",
+}
+
+NODE_TYPE_REQUIRED = {
+    **NODE_TYPE,
+    "required": True,
 }
