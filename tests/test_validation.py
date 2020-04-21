@@ -210,7 +210,7 @@ def test_payment_info_validation():
         payment_description="Pay for invoice",
         payable=True,
         payment_total_sum=Decimal("123.10"),
-        payer_name="Test Payer",
+        payer_name="Test buyer",
         payment_id="123",
         pay_to_account="EE471000001020145685",
         pay_to_name="Test Seller",
@@ -223,7 +223,7 @@ def test_payment_info_validation():
         "Payable": "YES",
         # Note that decimal will have maximum 2 decimal points,
         "PaymentTotalSum": Decimal("123.10"),
-        "PayerName": "Test Payer",
+        "PayerName": "Test buyer",
         "PaymentID": "123",
         "PayToAccount": "EE471000001020145685",
         "PayToName": "Test Seller",
@@ -790,4 +790,112 @@ def test_invoice_sum_group_validation():
 
 
 def test_invoice_validation():
-    pass
+    # Test all params are required
+    with pytest.raises(ValidationError) as validation_error:
+        Invoice(
+            invoice_id=None,
+            service_id=None,
+            reg_number=None,
+            seller_reg_number=None,
+            seller_party=None,
+            buyer_party=None,
+            invoice_information=None,
+            invoice_sum_group=None,
+            invoice_item_group=None,
+            payment_info=None,
+        )
+    assert {
+        "invoiceId": ["required field"],
+        "regNumber": ["required field"],
+        "sellerRegnumber": ["required field"],
+        "serviceId": ["required field"],
+        "InvoiceInformation": ["required field"],
+        "InvoiceItemGroup": ["required field"],
+        "InvoiceParties": [
+            {0: ["null value not allowed"], 1: ["null value not allowed"]}
+        ],
+        "InvoiceSumGroup": ["required field"],
+        "PaymentInfo": ["required field"],
+    } == ast.literal_eval(str(validation_error.value))
+
+    # Test with invalid params
+    with pytest.raises(ValidationError) as validation_error:
+        Invoice(
+            invoice_id=1,
+            service_id=2,
+            reg_number="{REG_NUMBER_123123}",
+            seller_reg_number=123456.7890,
+            seller_party=[SellerParty(name="Seller", reg_number="33333333333")],
+            buyer_party=[BuyerParty(name="Buyer"),],
+            invoice_information="Invoice description",
+            invoice_sum_group="Sum group",
+            invoice_item_group=Decimal("10.00"),
+            payment_info=["EUR",],
+        )
+    assert {
+        "invoiceId": ["must be of string type"],
+        "regNumber": ["max length is 15"],
+        "sellerRegnumber": ["must be of string type"],
+        "serviceId": ["must be of string type"],
+        "InvoiceInformation": ["must be of invoice_information type"],
+        "InvoiceItemGroup": ["must be of invoice_item_group type"],
+        "InvoiceParties": [
+            {0: ["must be of invoice_party type"], 1: ["must be of invoice_party type"]}
+        ],
+        "InvoiceSumGroup": ["must be of invoice_sum_group type"],
+        "PaymentInfo": ["must be of payment_info type"],
+    } == ast.literal_eval(str(validation_error.value))
+
+    # Test with valid params
+    seller_party = SellerParty(name="Test seller", reg_number="222222222")
+    buyer_party = BuyerParty(name="Test buyer", reg_number="111111111")
+    invoice_type = InvoiceType(invoice_type="DEB",)
+    invoice_information = InvoiceInformation(
+        invoice_type=invoice_type,
+        invoice_number="Invoice 1234",
+        invoice_date="2020-04-20",
+        document_name="Invoice 1234 for Test Company",
+    )
+    item_entries = [
+        ItemEntry(description="Item description 1",),
+        ItemEntry(description="Item description 2",),
+    ]
+    invoice_item_group = InvoiceItemGroup(invoice_item_entries=item_entries)
+    invoice_sum_group = InvoiceSumGroup(total_sum=Decimal("1.20"),)
+    payment_info = PaymentInfo(
+        currency="EUR",
+        payment_description="Invoice number 1234",
+        payable=False,
+        payment_total_sum=Decimal("1.20"),
+        payer_name="Test buyer",
+        payment_id="1234",
+        pay_to_account="EE909900123456789012",
+        pay_to_name="Test seller",
+        payment_due_date="2020-04-30",
+    )
+    invoice = Invoice(
+        invoice_id="1234",
+        service_id="1",
+        reg_number="111111111",
+        seller_reg_number="222222222",
+        seller_party=seller_party,
+        buyer_party=buyer_party,
+        invoice_information=invoice_information,
+        invoice_sum_group=invoice_sum_group,
+        invoice_item_group=invoice_item_group,
+        payment_info=payment_info,
+    )
+
+    assert invoice.elements == {
+        "InvoiceParties": [seller_party, buyer_party],
+        "InvoiceSumGroup": invoice_sum_group,
+        "InvoiceItemGroup": invoice_item_group,
+        "InvoiceInformation": invoice_information,
+        "PaymentInfo": payment_info,
+    }
+    assert invoice.attributes == {
+        "invoiceId": "1234",
+        "serviceId": "1",
+        "regNumber": "111111111",
+        "sellerRegnumber": "222222222",
+    }

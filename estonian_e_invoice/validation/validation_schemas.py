@@ -127,7 +127,7 @@ INVOICE_SCHEMA = {
         "schema": {"type": "invoice_party",},
         "required": True,
     },
-    "InvoiceInformation": INVOICE_TYPE_TYPE_REQUIRED,
+    "InvoiceInformation": INVOICE_INFORMATION_TYPE_REQUIRED,
     "InvoiceSumGroup": INVOICE_SUM_GROUP_TYPE_REQUIRED,
     "InvoiceItemGroup": INVOICE_ITEM_GROUP_TYPE_REQUIRED,
     "PaymentInfo": PAYMENT_INFO_TYPE_REQUIRED,

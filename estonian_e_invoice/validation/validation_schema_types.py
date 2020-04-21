@@ -185,7 +185,7 @@ INVOICE_INFORMATION_TYPE = {
     "type": "invoice_information",
 }
 
-INVOICE_INFORMATION_TYPE = {
+INVOICE_INFORMATION_TYPE_REQUIRED = {
     **INVOICE_INFORMATION_TYPE,
     "required": True,
 }
@@ -225,4 +225,3 @@ INVOICE_PARTY_TYPE_REQUIRED = {
     **INVOICE_PARTY_TYPE,
     "required": True,
 }
-

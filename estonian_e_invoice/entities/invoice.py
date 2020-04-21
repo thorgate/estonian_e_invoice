@@ -233,9 +233,7 @@ class InvoiceItemGroup(Node):
     validation_schema = INVOICE_ITEM_GROUP_SCHEMA
 
     def __init__(self, invoice_item_entries: List[ItemEntry],) -> None:
-        self.elements = self.validate({
-            "ItemEntry": invoice_item_entries,
-        })
+        self.elements = self.validate({"ItemEntry": invoice_item_entries,})
 
 
 class InvoiceSumGroup(Node):
