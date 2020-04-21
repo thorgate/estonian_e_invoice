@@ -62,7 +62,12 @@ class CustomValidator(Validator):
     def check_with_decimal_places(self, field, value, num_decimal_places):
         if isinstance(value, Decimal):
             if value.as_tuple().exponent != -num_decimal_places:
-                self._error(field, f"must have {num_decimal_places} decimal places")
+                self._error(
+                    field,
+                    "must have {num_decimal_places} decimal places".format(
+                        num_decimal_places=num_decimal_places
+                    ),
+                )
         else:
             self._error(field, "must be of a decimal type")
 
