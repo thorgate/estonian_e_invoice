@@ -305,6 +305,9 @@ def test_contact_data_validation():
         "LegalAddress": ["must be of legal_address type"],
     } == ast.literal_eval(str(validation_error.value))
 
+    # Test with valid params
+
+    # Create a legal address to be passed into the contact data
     legal_address = LegalAddress(postal_address_1="Test street 1", city="Test city",)
     # Test with valid params
     contact_data = ContactData(
@@ -408,7 +411,10 @@ def test_seller_party_validation():
     } == ast.literal_eval(str(validation_error.value))
 
     # Test with valid params
+
+    # Create seller legal address
     legal_address = LegalAddress(postal_address_1="Test street 1", city="Test city",)
+    # Create seller contact data
     contact_data = ContactData(
         contact_name="Test Contact Seller",
         contact_person_code="11111111111",
@@ -418,12 +424,14 @@ def test_seller_party_validation():
         email_address="testcontact@test.test",
         legal_address=legal_address,
     )
+    # Create seller account info
     account_info = AccountInfo(
         account_number="10123456789012",
         iban="EE471000001020145685",
         bic="HABAEE2X",
         bank_name="Test Bank",
     )
+    # Create seller
     seller_party = SellerParty(
         name="Test seller",
         reg_number="33333333333",
@@ -473,7 +481,10 @@ def test_buyer_party_validation():
     } == ast.literal_eval(str(validation_error.value))
 
     # Test with valid params
+
+    # Create buyer legal address
     legal_address = LegalAddress(postal_address_1="Test street 2", city="City of test",)
+    # Create buyer contact data
     contact_data = ContactData(
         contact_name="Test Contact Buyer",
         contact_person_code="22222222222",
@@ -483,12 +494,14 @@ def test_buyer_party_validation():
         email_address="testcontactbuyer@test.test",
         legal_address=legal_address,
     )
+    # Create buyer account info
     account_info = AccountInfo(
         account_number="10123456789023",
         iban="EE471000001056543214",
         bic="HABAEE2X",
         bank_name="Test Bank",
     )
+    # Create buyer
     buyer_party = BuyerParty(
         name="Test buyer",
         reg_number="44444444444",
@@ -582,6 +595,8 @@ def test_invoice_information_validation():
     } == ast.literal_eval(str(validation_error.value))
 
     # Test with valid params
+
+    # Create invoice type for the invoice information
     invoice_type = InvoiceType(invoice_type="DEB",)
     invoice_information = InvoiceInformation(
         invoice_type=invoice_type,
@@ -669,7 +684,10 @@ def test_item_entry_validation():
     } == ast.literal_eval(str(validation_error.value))
 
     # Test with valid params
+
+    # VAT info for item entry
     vat = VAT(vat_rate=Decimal("20.00"), vat_sum=Decimal("20.0000"),)
+    # Item detail info for the item entry
     item_detail_info = ItemDetailInfo(
         item_unit="m3", item_amount=Decimal("1.0000"), item_price=Decimal("50.0000"),
     )
@@ -727,6 +745,8 @@ def test_invoice_item_group_validation():
     )
 
     # Test with valid params
+
+    # Create item entries for the invoice item group
     item_entries = [
         ItemEntry(description="Item description",),
     ]
@@ -772,6 +792,8 @@ def test_invoice_sum_group_validation():
     } == ast.literal_eval(str(validation_error.value))
 
     # Test with valid params
+
+    # Create VAT information for the invoice sum group
     vat = VAT(vat_rate=Decimal("20.00"), vat_sum=Decimal("20.0000"),)
     invoice_sum_group = InvoiceSumGroup(
         total_sum=Decimal("123.12"),
@@ -847,21 +869,30 @@ def test_invoice_validation():
     } == ast.literal_eval(str(validation_error.value))
 
     # Test with valid params
+
+    # Seller party of the invoice
     seller_party = SellerParty(name="Test seller", reg_number="222222222")
+    # Buyer party of the invoice
     buyer_party = BuyerParty(name="Test buyer", reg_number="111111111")
+    # Type of the invoice
     invoice_type = InvoiceType(invoice_type="DEB",)
+    # Invoice information to be attached
     invoice_information = InvoiceInformation(
         invoice_type=invoice_type,
         invoice_number="Invoice 1234",
         invoice_date="2020-04-20",
         document_name="Invoice 1234 for Test Company",
     )
+    # Invoice items
     item_entries = [
         ItemEntry(description="Item description 1",),
         ItemEntry(description="Item description 2",),
     ]
+    # Item groups for the invoice
     invoice_item_group = InvoiceItemGroup(invoice_item_entries=item_entries)
+    # Sum groups for the invoice
     invoice_sum_group = InvoiceSumGroup(total_sum=Decimal("1.20"),)
+    # Payment info for the invoice
     payment_info = PaymentInfo(
         currency="EUR",
         payment_description="Invoice number 1234",
