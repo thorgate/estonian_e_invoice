@@ -1,9 +1,9 @@
 from decimal import Decimal
 
-from estonian_e_invoice.entities import Node
+from estonian_e_invoice.entities.common import Node
 from estonian_e_invoice.validation.validation_schemas import (
-    HEADER_SCHEMA,
     FOOTER_SCHEMA,
+    HEADER_SCHEMA,
 )
 
 

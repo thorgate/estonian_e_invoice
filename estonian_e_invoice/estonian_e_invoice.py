@@ -1,6 +1,5 @@
 """Main module."""
 from typing import TYPE_CHECKING
-
 from xml.dom import minidom
 from xml.etree import ElementTree
 

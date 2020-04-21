@@ -2,21 +2,20 @@ from datetime import datetime
 from decimal import Decimal
 
 from cerberus import TypeDefinition, Validator
-
 from estonian_e_invoice.entities import (
     VAT,
-    LegalAddress,
-    ContactData,
     AccountInfo,
-    InvoiceType,
-    ItemDetailInfo,
+    BuyerParty,
+    ContactData,
     InvoiceInformation,
     InvoiceItemGroup,
     InvoiceSumGroup,
+    InvoiceType,
+    ItemDetailInfo,
+    ItemEntry,
+    LegalAddress,
     PaymentInfo,
     SellerParty,
-    BuyerParty,
-    ItemEntry,
 )
 
 DECIMAL_TYPE = TypeDefinition("decimal", (Decimal,), ())
@@ -61,10 +60,10 @@ class CustomValidator(Validator):
 
     def check_with_decimal_places(self, field, value, num_decimal_places):
         if isinstance(value, Decimal):
-            if value.as_tuple().exponent != -num_decimal_places:
+            if -value.as_tuple().exponent > num_decimal_places:
                 self._error(
                     field,
-                    "must have {num_decimal_places} decimal places".format(
+                    "must not have more than {num_decimal_places} decimal places".format(
                         num_decimal_places=num_decimal_places
                     ),
                 )

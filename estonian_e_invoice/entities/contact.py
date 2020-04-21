@@ -1,6 +1,6 @@
 from typing import Optional
 
-from estonian_e_invoice.entities import Node
+from estonian_e_invoice.entities.common import Node
 from estonian_e_invoice.validation.validation_schemas import (
     ADDRESS_RECORD_SCHEMA,
     CONTACT_DATA_SCHEMA,

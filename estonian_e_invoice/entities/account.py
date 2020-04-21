@@ -1,7 +1,7 @@
 from decimal import Decimal
 from typing import Optional
 
-from estonian_e_invoice.entities import Node
+from estonian_e_invoice.entities.common import Node
 from estonian_e_invoice.validation.validation_schemas import (
     ACCOUNT_INFO_SCHEMA,
     PAYMENT_INFO_SCHEMA,

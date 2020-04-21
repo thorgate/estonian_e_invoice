@@ -1,6 +1,5 @@
 from estonian_e_invoice.validation.validation_schema_types import *
 
-
 HEADER_SCHEMA = {
     "Date": DATE_STRING_TYPE_REQUIRED,
     "FileID": SHORT_STRING_TYPE_REQUIRED,

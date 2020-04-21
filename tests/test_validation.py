@@ -7,8 +7,8 @@ from datetime import datetime
 from decimal import Decimal
 
 import pytest
-
 from estonian_e_invoice.entities import (
+    VAT,
     AccountInfo,
     BuyerParty,
     ContactData,
@@ -24,7 +24,6 @@ from estonian_e_invoice.entities import (
     LegalAddress,
     PaymentInfo,
     SellerParty,
-    VAT,
 )
 from estonian_e_invoice.validation.exceptions import ValidationError
 
@@ -197,7 +196,7 @@ def test_payment_info_validation():
     assert {
         "Currency": ["max length is 3", "value does not match regex '[A-Z][A-Z][A-Z]'"],
         "PaymentDescription": ["must be of string type"],
-        "PaymentTotalSum": ["must have 2 decimal places",],
+        "PaymentTotalSum": ["must not have more than 2 decimal places",],
         "PayerName": ["must be of string type"],
         "PaymentID": ["must be of string type"],
         "PayToAccount": ["must be of string type"],

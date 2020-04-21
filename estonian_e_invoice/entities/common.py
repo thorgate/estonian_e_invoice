@@ -9,6 +9,7 @@ class Node:
     validation_schema = None
 
     def validate(self, data: dict) -> dict:
+        # Run validations if there is a validation schema
         if self.validation_schema:
             from estonian_e_invoice.validation.exceptions import ValidationError
             from estonian_e_invoice.validation.validators import CustomValidator

@@ -1,18 +1,19 @@
 from decimal import Decimal
-from typing import Optional, List
+from typing import List, Optional
 
-from estonian_e_invoice.entities import AccountInfo, ContactData, Node, PaymentInfo
+from estonian_e_invoice.entities import AccountInfo, ContactData, PaymentInfo
+from estonian_e_invoice.entities.common import Node
 from estonian_e_invoice.validation.validation_schemas import (
-    VAT_SCHEMA,
-    SELLER_PARTY_SCHEMA,
     BUYER_PARTY_SCHEMA,
     INVOICE_INFORMATION_SCHEMA,
+    INVOICE_ITEM_GROUP_SCHEMA,
+    INVOICE_SCHEMA,
+    INVOICE_SUM_GROUP_SCHEMA,
+    INVOICE_TYPE_VALIDATION_SCHEMA,
     ITEM_DETAIL_INFO_SCHEMA,
     ITEM_ENTRY_SCHEMA,
-    INVOICE_SUM_GROUP_SCHEMA,
-    INVOICE_SCHEMA,
-    INVOICE_TYPE_VALIDATION_SCHEMA,
-    INVOICE_ITEM_GROUP_SCHEMA,
+    SELLER_PARTY_SCHEMA,
+    VAT_SCHEMA,
 )
 
 
@@ -198,6 +199,7 @@ class ItemEntry(Node):
         item_sum: Total amount without taxes and discount.
         vat: Describes value-added tax
         item_total: Total amount including taxes.
+        item_detail_info: Detailed information of products/services.
     """
 
     tag = "ItemEntry"
