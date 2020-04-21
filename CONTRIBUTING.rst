@@ -111,7 +111,7 @@ Tips
 
 To run a subset of tests::
 
-$ pytest tests.test_estonian_e_invoice
+$ pytest tests
 
 
 Deploying

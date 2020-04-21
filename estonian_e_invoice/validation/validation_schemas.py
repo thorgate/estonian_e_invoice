@@ -40,6 +40,7 @@ ADDRESS_RECORD_SCHEMA = {
     "PostalAddress2": NORMAL_STRING_TYPE,
     "City": NORMAL_STRING_TYPE_REQUIRED,
     "PostalCode": {**STRING_TYPE, "maxlength": 10,},
+    "Country": NORMAL_STRING_TYPE,
 }
 
 CONTACT_DATA_SCHEMA = {
@@ -52,7 +53,7 @@ CONTACT_DATA_SCHEMA = {
         **STRING_TYPE,
         "regex": ".+@.+",  # From the documentation, not a real good regex for emails.
     },
-    "LegalAddress": NODE_TYPE,
+    "LegalAddress": LEGAL_ADDRESS_TYPE,
 }
 
 VAT_SCHEMA = {
@@ -67,8 +68,8 @@ SELLER_PARTY_SCHEMA = {
     "Name": NORMAL_STRING_TYPE_REQUIRED,
     "RegNumber": REG_TYPE_REQUIRED,
     "VATRegNumber": REG_TYPE,
-    "ContactData": NODE_TYPE,
-    "AccountInfo": NODE_TYPE,
+    "ContactData": CONTACT_DATA_TYPE,
+    "AccountInfo": ACCOUNT_INFO_TYPE,
 }
 
 BUYER_PARTY_SCHEMA = {
@@ -77,7 +78,7 @@ BUYER_PARTY_SCHEMA = {
 }
 
 INVOICE_INFORMATION_SCHEMA = {
-    "Type": NODE_TYPE_REQUIRED,
+    "Type": INVOICE_TYPE_TYPE_REQUIRED,
     "InvoiceNumber": NORMAL_STRING_TYPE_REQUIRED,
     "InvoiceDate": DATE_STRING_TYPE_REQUIRED,
     "DocumentName": NORMAL_STRING_TYPE_REQUIRED,
@@ -95,7 +96,8 @@ ITEM_ENTRY_SCHEMA = {
     "Description": LONG_STRING_TYPE_REQUIRED,
     "ItemSum": DECIMAL_TYPE_FOUR_DECIMAL_PLACES,
     "ItemTotal": DECIMAL_TYPE_FOUR_DECIMAL_PLACES,
-    "ItemDetailInfo": NODE_TYPE,
+    "ItemDetailInfo": ITEM_DETAIL_INFO_TYPE,
+    "VAT": VAT_TYPE,
 }
 
 INVOICE_SUM_GROUP_SCHEMA = {
@@ -103,11 +105,11 @@ INVOICE_SUM_GROUP_SCHEMA = {
     "InvoiceSum": DECIMAL_TYPE_FOUR_DECIMAL_PLACES,
     "Currency": CURRENCY_TYPE,
     "TotalToPay": DECIMAL_TYPE_TWO_DECIMAL_PLACES,
-    "VAT": NODE_TYPE,
+    "VAT": VAT_TYPE,
 }
 
 INVOICE_ITEM_GROUP_SCHEMA = {
-    "ItemEntry": {"type": "list", "schema": {"type": "node",}, "required": True,}
+    "ItemEntry": {"type": "list", "schema": {"type": "item_entry",}, "required": True,}
 }
 
 INVOICE_TYPE_VALIDATION_SCHEMA = {
@@ -120,9 +122,13 @@ INVOICE_SCHEMA = {
     "serviceId": SHORT_STRING_TYPE_REQUIRED,
     "regNumber": REG_TYPE_REQUIRED,
     "sellerRegnumber": REG_TYPE_REQUIRED,
-    "InvoiceParties": {"type": "list", "schema": {"type": "node",}, "required": True,},
-    "InvoiceInformation": NODE_TYPE_REQUIRED,
-    "InvoiceSumGroup": NODE_TYPE_REQUIRED,
-    "InvoiceItemGroup": NODE_TYPE_REQUIRED,
-    "PaymentInfo": NODE_TYPE_REQUIRED,
+    "InvoiceParties": {
+        "type": "list",
+        "schema": {"type": "invoice_party",},
+        "required": True,
+    },
+    "InvoiceInformation": INVOICE_TYPE_TYPE_REQUIRED,
+    "InvoiceSumGroup": INVOICE_SUM_GROUP_TYPE_REQUIRED,
+    "InvoiceItemGroup": INVOICE_ITEM_GROUP_TYPE_REQUIRED,
+    "PaymentInfo": PAYMENT_INFO_TYPE_REQUIRED,
 }

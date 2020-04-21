@@ -68,7 +68,7 @@ DECIMAL_TYPE_REQUIRED = {
 
 DECIMAL_TYPE_TWO_DECIMAL_PLACES = {
     **DECIMAL_TYPE,
-    "coerce": "two_decimal_places",
+    "check_with": "two_decimal_places",
 }
 
 DECIMAL_TYPE_TWO_DECIMAL_PLACES_REQUIRED = {
@@ -78,7 +78,7 @@ DECIMAL_TYPE_TWO_DECIMAL_PLACES_REQUIRED = {
 
 DECIMAL_TYPE_FOUR_DECIMAL_PLACES = {
     **DECIMAL_TYPE,
-    "coerce": "four_decimal_places",
+    "check_with": "four_decimal_places",
 }
 
 DECIMAL_TYPE_FOUR_DECIMAL_PLACES_REQUIRED = {
@@ -118,11 +118,111 @@ CURRENCY_TYPE_REQUIRED = {
     "required": True,
 }
 
-NODE_TYPE = {
-    "type": "node",
+VAT_TYPE = {
+    "type": "vat",
 }
 
-NODE_TYPE_REQUIRED = {
-    **NODE_TYPE,
+VAT_TYPE_REQUIRED = {
+    **VAT_TYPE,
     "required": True,
 }
+
+LEGAL_ADDRESS_TYPE = {
+    "type": "legal_address",
+}
+
+LEGAL_ADDRESS_TYPE_REQUIRED = {
+    **LEGAL_ADDRESS_TYPE,
+    "required": True,
+}
+
+CONTACT_DATA_TYPE = {
+    "type": "contact_data",
+}
+
+CONTACT_DATA_TYPE_REQUIRED = {
+    **CONTACT_DATA_TYPE,
+    "required": True,
+}
+
+ACCOUNT_INFO_TYPE = {
+    "type": "account_info",
+}
+
+ACCOUNT_INFO_TYPE_REQUIRED = {
+    **ACCOUNT_INFO_TYPE,
+    "required": True,
+}
+
+INVOICE_TYPE_TYPE = {
+    "type": "invoice_type",
+}
+
+INVOICE_TYPE_TYPE_REQUIRED = {
+    **INVOICE_TYPE_TYPE,
+    "required": True,
+}
+
+ITEM_DETAIL_INFO_TYPE = {
+    "type": "item_detail_info",
+}
+
+ITEM_DETAIL_INFO_TYPE_REQUIRED = {
+    **ITEM_DETAIL_INFO_TYPE,
+    "required": True,
+}
+
+ITEM_ENTRY_TYPE = {
+    "type": "item_entry",
+}
+
+ITEM_ENTRY_TYPE_REQUIRED = {
+    **ITEM_ENTRY_TYPE,
+    "required": True,
+}
+
+INVOICE_INFORMATION_TYPE = {
+    "type": "invoice_information",
+}
+
+INVOICE_INFORMATION_TYPE = {
+    **INVOICE_INFORMATION_TYPE,
+    "required": True,
+}
+
+INVOICE_SUM_GROUP_TYPE = {
+    "type": "invoice_sum_group",
+}
+
+INVOICE_SUM_GROUP_TYPE_REQUIRED = {
+    **INVOICE_SUM_GROUP_TYPE,
+    "required": True,
+}
+
+INVOICE_ITEM_GROUP_TYPE = {
+    "type": "invoice_item_group",
+}
+
+INVOICE_ITEM_GROUP_TYPE_REQUIRED = {
+    **INVOICE_ITEM_GROUP_TYPE,
+    "required": True,
+}
+
+PAYMENT_INFO_TYPE = {
+    "type": "payment_info",
+}
+
+PAYMENT_INFO_TYPE_REQUIRED = {
+    **PAYMENT_INFO_TYPE,
+    "required": True,
+}
+
+INVOICE_PARTY_TYPE = {
+    "type": "invoice_party",
+}
+
+INVOICE_PARTY_TYPE_REQUIRED = {
+    **INVOICE_PARTY_TYPE,
+    "required": True,
+}
+

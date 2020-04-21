@@ -10,7 +10,8 @@ class Node:
 
     def validate(self, data: dict) -> dict:
         if self.validation_schema:
-            from estonian_e_invoice.validation import CustomValidator, ValidationError
+            from estonian_e_invoice.validation.exceptions import ValidationError
+            from estonian_e_invoice.validation.validators import CustomValidator
 
             validator = CustomValidator(self.validation_schema)
             # Exclude None values.

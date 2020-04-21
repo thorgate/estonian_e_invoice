@@ -124,6 +124,12 @@ class InvoiceType(Node):
             "type": validated_data["Type"],
         }
 
+        source_invoice = validated_data.get("SourceInvoice")
+        if source_invoice:
+            self.elements = {
+                "SourceInvoice": source_invoice,
+            }
+
 
 class InvoiceInformation(Node):
     """
@@ -227,9 +233,9 @@ class InvoiceItemGroup(Node):
     validation_schema = INVOICE_ITEM_GROUP_SCHEMA
 
     def __init__(self, invoice_item_entries: List[ItemEntry],) -> None:
-        self.elements = {
+        self.elements = self.validate({
             "ItemEntry": invoice_item_entries,
-        }
+        })
 
 
 class InvoiceSumGroup(Node):
