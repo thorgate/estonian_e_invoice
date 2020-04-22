@@ -15,9 +15,9 @@ class Node:
             from estonian_e_invoice.validation.validators import CustomValidator
 
             validator = CustomValidator(self.validation_schema)
-            # Exclude None values.
+            # Exclude null and blank values.
             is_valid = validator.validate(
-                {k: v for k, v in data.items() if v is not None}
+                {k: v for k, v in data.items() if v not in (None, "")}
             )
 
             if is_valid:

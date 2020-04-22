@@ -118,7 +118,6 @@ INVOICE_TYPE_VALIDATION_SCHEMA = {
 
 INVOICE_SCHEMA = {
     "invoiceId": NORMAL_STRING_TYPE_REQUIRED,
-    "serviceId": SHORT_STRING_TYPE_REQUIRED,
     "regNumber": REG_TYPE_REQUIRED,
     "sellerRegnumber": REG_TYPE_REQUIRED,
     "InvoiceParties": {

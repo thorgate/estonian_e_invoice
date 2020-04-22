@@ -7,6 +7,13 @@ from estonian_e_invoice.validation.validation_schemas import (
 )
 
 
+"""
+The version of the standard used. Further information can be found here:
+https://wp.itl.ee/files/Estonian_e-invoice_description_ver1.2_eng.pdf
+"""
+E_INVOICE_VERSION = "1.2"
+
+
 class Header(Node):
     """
     Contains file specific elements.
@@ -19,9 +26,9 @@ class Header(Node):
     tag = "Header"
     validation_schema = HEADER_SCHEMA
 
-    def __init__(self, date: str, file_id: str, version: str,) -> None:
+    def __init__(self, date: str, file_id: str,) -> None:
         self.elements = self.validate(
-            {"Date": date, "FileID": file_id, "Version": version,}
+            {"Date": date, "FileID": file_id, "Version": E_INVOICE_VERSION,}
         )
 
 

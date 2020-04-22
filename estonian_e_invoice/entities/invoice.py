@@ -277,7 +277,6 @@ class Invoice(Node):
     Contains information about one specific invoice.
 
         invoice_id: Unique id of the invoice (on the scope of one file).
-        service_id: Client identification number (reference number, client code, client number etc.) in sellers system.
         reg_number: Personal ID/registration code of the invoice receiver.
         seller_reg_number: Seller’s registration number.
         seller_party: Sender of the invoice.
@@ -293,7 +292,6 @@ class Invoice(Node):
     def __init__(
         self,
         invoice_id: str,
-        service_id: str,
         reg_number: str,
         seller_reg_number: str,
         seller_party: SellerParty,
@@ -306,7 +304,6 @@ class Invoice(Node):
         validated_data = self.validate(
             {
                 "invoiceId": invoice_id,
-                "serviceId": service_id,
                 "regNumber": reg_number,
                 "sellerRegnumber": seller_reg_number,
                 "InvoiceParties": [seller_party, buyer_party],
@@ -318,7 +315,6 @@ class Invoice(Node):
         )
         self.attributes = {
             "invoiceId": validated_data["invoiceId"],
-            "serviceId": validated_data["serviceId"],
             "regNumber": validated_data["regNumber"],
             "sellerRegnumber": validated_data["sellerRegnumber"],
         }

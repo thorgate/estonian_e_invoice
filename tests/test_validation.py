@@ -47,35 +47,33 @@ def test_content(response):
 def test_header_validation():
     # Test date, file_id and version are required
     with pytest.raises(ValidationError) as validation_error:
-        Header(date=None, file_id=None, version=None)
+        Header(date=None, file_id=None)
     assert {
         "Date": ["required field"],
         "FileID": ["required field"],
-        "Version": ["required field"],
     } == ast.literal_eval(str(validation_error.value))
 
     # Test with invalid params
     with pytest.raises(ValidationError) as validation_error:
-        Header(date=1111, file_id=123456, version=123456)
+        Header(date=1111, file_id=123456)
     assert {
         "Date": ["must be of string type"],
         "FileID": ["must be of string type"],
-        "Version": ["must be of string type"],
     } == ast.literal_eval(str(validation_error.value))
 
     # Test with invalid date
     with pytest.raises(ValidationError) as validation_error:
-        Header(date="20-04-2020", file_id="123456", version="123456")
+        Header(date="20-04-2020", file_id="123456")
     assert {"Date": ["Date should be in %Y-%m-%d format"]} == ast.literal_eval(
         str(validation_error.value)
     )
 
     # Test with valid params
-    header = Header(date="2020-04-20", file_id="123456", version="123456")
+    header = Header(date="2020-04-20", file_id="123456")
     assert header.elements == {
         "Date": "2020-04-20",
         "FileID": "123456",
-        "Version": "123456",
+        "Version": "1.2",
     }
 
 
@@ -286,8 +284,8 @@ def test_contact_data_validation():
     # Test with invalid params
     with pytest.raises(ValidationError) as validation_error:
         ContactData(
-            contact_name="",
-            contact_person_code="",
+            contact_name=Decimal("10.00"),
+            contact_person_code="1234567890123456",
             phone_number=58512128,
             fax_number=1.33,
             url={},
@@ -295,8 +293,8 @@ def test_contact_data_validation():
             legal_address="Legal",
         )
     assert {
-        "ContactName": ["empty values not allowed"],
-        "ContactPersonCode": ["empty values not allowed"],
+        "ContactName": ["must be of string type"],
+        "ContactPersonCode": ["max length is 15"],
         "PhoneNumber": ["must be of string type"],
         "FaxNumber": ["must be of string type"],
         "URL": ["must be of string type"],
@@ -815,7 +813,6 @@ def test_invoice_validation():
     with pytest.raises(ValidationError) as validation_error:
         Invoice(
             invoice_id=None,
-            service_id=None,
             reg_number=None,
             seller_reg_number=None,
             seller_party=None,
@@ -829,7 +826,6 @@ def test_invoice_validation():
         "invoiceId": ["required field"],
         "regNumber": ["required field"],
         "sellerRegnumber": ["required field"],
-        "serviceId": ["required field"],
         "InvoiceInformation": ["required field"],
         "InvoiceItemGroup": ["required field"],
         "InvoiceParties": [
@@ -843,7 +839,6 @@ def test_invoice_validation():
     with pytest.raises(ValidationError) as validation_error:
         Invoice(
             invoice_id=1,
-            service_id=2,
             reg_number="{REG_NUMBER_123123}",
             seller_reg_number=123456.7890,
             seller_party=[SellerParty(name="Seller", reg_number="33333333333")],
@@ -857,7 +852,6 @@ def test_invoice_validation():
         "invoiceId": ["must be of string type"],
         "regNumber": ["max length is 15"],
         "sellerRegnumber": ["must be of string type"],
-        "serviceId": ["must be of string type"],
         "InvoiceInformation": ["must be of invoice_information type"],
         "InvoiceItemGroup": ["must be of invoice_item_group type"],
         "InvoiceParties": [
@@ -905,7 +899,6 @@ def test_invoice_validation():
     )
     invoice = Invoice(
         invoice_id="1234",
-        service_id="1",
         reg_number="111111111",
         seller_reg_number="222222222",
         seller_party=seller_party,
@@ -925,7 +918,6 @@ def test_invoice_validation():
     }
     assert invoice.attributes == {
         "invoiceId": "1234",
-        "serviceId": "1",
         "regNumber": "111111111",
         "sellerRegnumber": "222222222",
     }
