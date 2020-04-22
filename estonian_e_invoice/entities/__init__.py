@@ -6,7 +6,7 @@ from estonian_e_invoice.entities.invoice import (
     BuyerParty,
     Invoice,
     InvoiceInformation,
-    InvoiceItemGroup,
+    InvoiceItem,
     InvoiceSumGroup,
     InvoiceType,
     ItemDetailInfo,

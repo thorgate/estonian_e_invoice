@@ -6,10 +6,10 @@ from estonian_e_invoice.entities.common import Node
 from estonian_e_invoice.validation.validation_schemas import (
     BUYER_PARTY_SCHEMA,
     INVOICE_INFORMATION_SCHEMA,
-    INVOICE_ITEM_GROUP_SCHEMA,
+    INVOICE_ITEM_SCHEMA,
     INVOICE_SCHEMA,
     INVOICE_SUM_GROUP_SCHEMA,
-    INVOICE_TYPE_VALIDATION_SCHEMA,
+    INVOICE_TYPE_SCHEMA,
     ITEM_DETAIL_INFO_SCHEMA,
     ITEM_ENTRY_SCHEMA,
     SELLER_PARTY_SCHEMA,
@@ -115,7 +115,7 @@ class InvoiceType(Node):
     """
 
     tag = "Type"
-    validation_schema = INVOICE_TYPE_VALIDATION_SCHEMA
+    validation_schema = INVOICE_TYPE_SCHEMA
 
     def __init__(self, invoice_type: str, source_invoice: Optional[str] = None):
         validated_data = self.validate(
@@ -224,18 +224,18 @@ class ItemEntry(Node):
         )
 
 
-class InvoiceItemGroup(Node):
+class InvoiceItem(Node):
     """
-    The main group on invoice rows. Group of invoice items or invoice rows
+     Contains information about invoice rows.
 
         invoice_item_entries: Describes one specific invoice row entries.
     """
 
-    tag = "InvoiceItemGroup"
-    validation_schema = INVOICE_ITEM_GROUP_SCHEMA
+    tag = "InvoiceItem"
+    validation_schema = INVOICE_ITEM_SCHEMA
 
     def __init__(self, invoice_item_entries: List[ItemEntry],) -> None:
-        self.elements = self.validate({"ItemEntry": invoice_item_entries,})
+        self.elements = self.validate({"InvoiceItemGroup": invoice_item_entries,})
 
 
 class InvoiceSumGroup(Node):
@@ -245,7 +245,7 @@ class InvoiceSumGroup(Node):
         total_sum: Invoice total sum.
         invoice_sum: Amount of the invoice without tax.
         currency: Three-character currency code as specified in ISO 4217.
-        total_to_pay: Amout to be paid. Credit invoice must have 0.00.
+        total_to_pay: Amount to be paid. Credit invoice must have 0.00.
                       Negative amounts does not correspond to the Estonian legislation.
         vat: Describes value-added tax.
     """
@@ -283,7 +283,7 @@ class Invoice(Node):
         buyer_party: Receiver of the invoice.
         invoice_information: Contains general information about the invoice.
         invoice_sum_group: Information block for invoiced amounts.
-        invoice_item_group: The main group on invoice rows. Group of invoice items or invoice rows.
+        invoice_item: Information block for invoice row entries.
     """
 
     tag = "Invoice"
@@ -298,7 +298,7 @@ class Invoice(Node):
         buyer_party: BuyerParty,
         invoice_information: InvoiceInformation,
         invoice_sum_group: InvoiceSumGroup,
-        invoice_item_group: InvoiceItemGroup,
+        invoice_item: InvoiceItem,
         payment_info: PaymentInfo,
     ) -> None:
         validated_data = self.validate(
@@ -309,7 +309,7 @@ class Invoice(Node):
                 "InvoiceParties": [seller_party, buyer_party],
                 "InvoiceInformation": invoice_information,
                 "InvoiceSumGroup": invoice_sum_group,
-                "InvoiceItemGroup": invoice_item_group,
+                "InvoiceItem": invoice_item,
                 "PaymentInfo": payment_info,
             }
         )
@@ -322,6 +322,6 @@ class Invoice(Node):
             "InvoiceParties": validated_data["InvoiceParties"],
             "InvoiceInformation": validated_data["InvoiceInformation"],
             "InvoiceSumGroup": validated_data["InvoiceSumGroup"],
-            "InvoiceItemGroup": validated_data["InvoiceItemGroup"],
+            "InvoiceItem": validated_data["InvoiceItem"],
             "PaymentInfo": validated_data["PaymentInfo"],
         }

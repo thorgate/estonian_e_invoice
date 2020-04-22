@@ -212,12 +212,12 @@ INVOICE_SUM_GROUP_TYPE_REQUIRED = {
     "required": True,
 }
 
-INVOICE_ITEM_GROUP_TYPE = {
-    "type": "invoice_item_group",
+INVOICE_ITEM_TYPE = {
+    "type": "invoice_item",
 }
 
-INVOICE_ITEM_GROUP_TYPE_REQUIRED = {
-    **INVOICE_ITEM_GROUP_TYPE,
+INVOICE_ITEM_TYPE_REQUIRED = {
+    **INVOICE_ITEM_TYPE,
     "required": True,
 }
 

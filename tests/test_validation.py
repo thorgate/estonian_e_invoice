@@ -16,7 +16,7 @@ from estonian_e_invoice.entities import (
     Header,
     Invoice,
     InvoiceInformation,
-    InvoiceItemGroup,
+    InvoiceItem,
     InvoiceSumGroup,
     InvoiceType,
     ItemDetailInfo,
@@ -694,46 +694,44 @@ def test_item_entry_validation():
     }
 
 
-def test_invoice_item_group_validation():
+def test_invoice_item_validation():
     # Test invoice_item_entries is required
     with pytest.raises(ValidationError) as validation_error:
-        InvoiceItemGroup(invoice_item_entries=None,)
-    assert {"ItemEntry": ["required field"],} == ast.literal_eval(
+        InvoiceItem(invoice_item_entries=None,)
+    assert {"InvoiceItemGroup": ["required field"],} == ast.literal_eval(
         str(validation_error.value)
     )
 
     # Test with invalid params
     with pytest.raises(ValidationError) as validation_error:
-        InvoiceItemGroup(
+        InvoiceItem(
             invoice_item_entries=[
                 VAT(vat_rate=Decimal("20.00"), vat_sum=Decimal("20.0000"),),
                 VAT(vat_rate=Decimal("20.00"), vat_sum=Decimal("20.0000"),),
             ]
         )
     assert {
-        "ItemEntry": [
+        "InvoiceItemGroup": [
             {0: ["must be of item_entry type"], 1: ["must be of item_entry type"]},
         ],
     } == ast.literal_eval(str(validation_error.value))
 
     # Test a list of item entries is required
     with pytest.raises(ValidationError) as validation_error:
-        InvoiceItemGroup(
-            invoice_item_entries=ItemEntry(description="Item description"),
-        )
-    assert {"ItemEntry": ["must be of list type"],} == ast.literal_eval(
+        InvoiceItem(invoice_item_entries=ItemEntry(description="Item description"),)
+    assert {"InvoiceItemGroup": ["must be of list type"],} == ast.literal_eval(
         str(validation_error.value)
     )
 
     # Test with valid params
 
-    # Create item entries for the invoice item group
+    # Create item entries for the invoice item
     item_entries = [
         ItemEntry(description="Item description",),
     ]
-    invoice_item_group = InvoiceItemGroup(invoice_item_entries=item_entries)
-    assert invoice_item_group.elements == {
-        "ItemEntry": item_entries,
+    invoice_item = InvoiceItem(invoice_item_entries=item_entries)
+    assert invoice_item.elements == {
+        "InvoiceItemGroup": item_entries,
     }
 
     # Test with multiple item entries
@@ -741,9 +739,9 @@ def test_invoice_item_group_validation():
         ItemEntry(description="Item description 1",),
         ItemEntry(description="Item description 2",),
     ]
-    invoice_item_group = InvoiceItemGroup(invoice_item_entries=item_entries)
-    assert invoice_item_group.elements == {
-        "ItemEntry": item_entries,
+    invoice_item = InvoiceItem(invoice_item_entries=item_entries)
+    assert invoice_item.elements == {
+        "InvoiceItemGroup": item_entries,
     }
 
 
@@ -803,7 +801,7 @@ def test_invoice_validation():
             buyer_party=None,
             invoice_information=None,
             invoice_sum_group=None,
-            invoice_item_group=None,
+            invoice_item=None,
             payment_info=None,
         )
     assert {
@@ -811,7 +809,7 @@ def test_invoice_validation():
         "regNumber": ["required field"],
         "sellerRegnumber": ["required field"],
         "InvoiceInformation": ["required field"],
-        "InvoiceItemGroup": ["required field"],
+        "InvoiceItem": ["required field"],
         "InvoiceParties": [
             {0: ["null value not allowed"], 1: ["null value not allowed"]}
         ],
@@ -829,7 +827,7 @@ def test_invoice_validation():
             buyer_party=[BuyerParty(name="Buyer"),],
             invoice_information="Invoice description",
             invoice_sum_group="Sum group",
-            invoice_item_group=Decimal("10.00"),
+            invoice_item=Decimal("10.00"),
             payment_info=["EUR",],
         )
     assert {
@@ -837,7 +835,7 @@ def test_invoice_validation():
         "regNumber": ["max length is 15"],
         "sellerRegnumber": ["must be of string type"],
         "InvoiceInformation": ["must be of invoice_information type"],
-        "InvoiceItemGroup": ["must be of invoice_item_group type"],
+        "InvoiceItem": ["must be of invoice_item type"],
         "InvoiceParties": [
             {0: ["must be of invoice_party type"], 1: ["must be of invoice_party type"]}
         ],
@@ -865,8 +863,8 @@ def test_invoice_validation():
         ItemEntry(description="Item description 1",),
         ItemEntry(description="Item description 2",),
     ]
-    # Item groups for the invoice
-    invoice_item_group = InvoiceItemGroup(invoice_item_entries=item_entries)
+    # Item entries group for the invoice
+    invoice_item = InvoiceItem(invoice_item_entries=item_entries)
     # Sum groups for the invoice
     invoice_sum_group = InvoiceSumGroup(total_sum=Decimal("1.20"),)
     # Payment info for the invoice
@@ -889,14 +887,14 @@ def test_invoice_validation():
         buyer_party=buyer_party,
         invoice_information=invoice_information,
         invoice_sum_group=invoice_sum_group,
-        invoice_item_group=invoice_item_group,
+        invoice_item=invoice_item,
         payment_info=payment_info,
     )
 
     assert invoice.elements == {
         "InvoiceParties": [seller_party, buyer_party],
         "InvoiceSumGroup": invoice_sum_group,
-        "InvoiceItemGroup": invoice_item_group,
+        "InvoiceItem": invoice_item,
         "InvoiceInformation": invoice_information,
         "PaymentInfo": payment_info,
     }
