@@ -107,11 +107,15 @@ INVOICE_SUM_GROUP_SCHEMA = {
     "VAT": VAT_TYPE,
 }
 
-INVOICE_ITEM_GROUP_SCHEMA = {
-    "ItemEntry": {"type": "list", "schema": {"type": "item_entry",}, "required": True,}
+INVOICE_ITEM_SCHEMA = {
+    "InvoiceItemGroup": {
+        "type": "list",
+        "schema": {"type": "item_entry",},
+        "required": True,
+    }
 }
 
-INVOICE_TYPE_VALIDATION_SCHEMA = {
+INVOICE_TYPE_SCHEMA = {
     "Type": {**STRING_TYPE_REQUIRED, "maxlength": 3, "allowed": ["DEB", "CRE",],},
     "SourceInvoice": SHORT_STRING_TYPE,
 }
@@ -127,6 +131,6 @@ INVOICE_SCHEMA = {
     },
     "InvoiceInformation": INVOICE_INFORMATION_TYPE_REQUIRED,
     "InvoiceSumGroup": INVOICE_SUM_GROUP_TYPE_REQUIRED,
-    "InvoiceItemGroup": INVOICE_ITEM_GROUP_TYPE_REQUIRED,
+    "InvoiceItem": INVOICE_ITEM_TYPE_REQUIRED,
     "PaymentInfo": PAYMENT_INFO_TYPE_REQUIRED,
 }

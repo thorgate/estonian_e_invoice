@@ -28,6 +28,7 @@ class Node:
             </Child>
         </Node>
     """
+
     # XML element's name.
     tag = "Node"
     # Dictionary of sub XML elements.
@@ -74,11 +75,12 @@ class Node:
             if isinstance(value, Node):
                 parent.append(value.to_etree())
             elif isinstance(value, list):
-                for node in value:
-                    if isinstance(node, Node):
-                        parent.append(node.to_etree())
-                    else:
-                        raise ValueError("Provided value is not an instance of Node class")
+                if all(isinstance(node, Node) for node in value):
+                    child = SubElement(parent, key)
+                    for node in value:
+                        child.append(node.to_etree())
+                else:
+                    raise ValueError("Provided value are not instances of Node class")
             else:
                 child = SubElement(parent, key)
                 self.set_attrs(child, self.element_attrs.get(key, {}))

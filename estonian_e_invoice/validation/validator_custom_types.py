@@ -7,7 +7,7 @@ from estonian_e_invoice.entities import (
     BuyerParty,
     ContactData,
     InvoiceInformation,
-    InvoiceItemGroup,
+    InvoiceItem,
     InvoiceSumGroup,
     InvoiceType,
     ItemDetailInfo,
@@ -27,7 +27,7 @@ ITEM_DETAIL_INFO_TYPE = TypeDefinition("item_detail_info", (ItemDetailInfo,), ()
 INVOICE_INFORMATION_TYPE = TypeDefinition(
     "invoice_information", (InvoiceInformation,), ()
 )
-INVOICE_ITEM_GROUP_TYPE = TypeDefinition("invoice_item_group", (InvoiceItemGroup,), ())
+INVOICE_ITEM_TYPE = TypeDefinition("invoice_item", (InvoiceItem,), ())
 INVOICE_SUM_GROUP_TYPE = TypeDefinition("invoice_sum_group", (InvoiceSumGroup,), ())
 PAYMENT_INFO_TYPE = TypeDefinition("payment_info", (PaymentInfo,), ())
 ITEM_ENTRY_TYPE = TypeDefinition("item_entry", (ItemEntry,), ())
