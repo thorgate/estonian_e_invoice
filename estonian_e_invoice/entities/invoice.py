@@ -159,9 +159,9 @@ class InvoiceInformation(Node):
         self.elements = self.validate(
             {
                 "Type": invoice_type,
+                "DocumentName": document_name,
                 "InvoiceNumber": invoice_number,
                 "InvoiceDate": invoice_date,
-                "DocumentName": document_name,
                 "DueDate": due_date,
                 "FineRatePerDay": fine_rate_per_day,
             }
