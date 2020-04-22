@@ -75,7 +75,7 @@ class PaymentInfo(Node):
                 "Payable": payable,
                 "PaymentTotalSum": payment_total_sum,
                 "PayerName": payer_name,
-                "PaymentID": payment_id,
+                "PaymentId": payment_id,
                 "PayToAccount": pay_to_account,
                 "PayToName": pay_to_name,
                 "PayDueDate": pay_due_date,

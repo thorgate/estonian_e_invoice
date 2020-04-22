@@ -34,7 +34,7 @@ def test_header_validation():
         Header(date=None, file_id=None)
     assert {
         "Date": ["required field"],
-        "FileID": ["required field"],
+        "FileId": ["required field"],
     } == ast.literal_eval(str(validation_error.value))
 
     # Test with invalid params
@@ -42,7 +42,7 @@ def test_header_validation():
         Header(date=1111, file_id=123456)
     assert {
         "Date": ["must be of string type"],
-        "FileID": ["must be of string type"],
+        "FileId": ["must be of string type"],
     } == ast.literal_eval(str(validation_error.value))
 
     # Test with invalid date
@@ -56,7 +56,7 @@ def test_header_validation():
     header = Header(date="2020-04-20", file_id="123456")
     assert header.elements == {
         "Date": "2020-04-20",
-        "FileID": "123456",
+        "FileId": "123456",
         "Version": "1.2",
     }
 
@@ -157,7 +157,7 @@ def test_payment_info_validation():
         "Payable": ["required field"],
         "PaymentTotalSum": ["required field"],
         "PayerName": ["required field"],
-        "PaymentID": ["required field"],
+        "PaymentId": ["required field"],
         "PayToAccount": ["required field"],
         "PayToName": ["required field"],
     } == ast.literal_eval(str(validation_error.value))
@@ -180,7 +180,7 @@ def test_payment_info_validation():
         "PaymentDescription": ["must be of string type"],
         "PaymentTotalSum": ["must not have more than 2 decimal places",],
         "PayerName": ["must be of string type"],
-        "PaymentID": ["must be of string type"],
+        "PaymentId": ["must be of string type"],
         "PayToAccount": ["must be of string type"],
         "PayToName": ["must be of string type"],
     } == ast.literal_eval(str(validation_error.value))
@@ -205,7 +205,7 @@ def test_payment_info_validation():
         # Note that decimal will have maximum 2 decimal points,
         "PaymentTotalSum": Decimal("123.10"),
         "PayerName": "Test buyer",
-        "PaymentID": "123",
+        "PaymentId": "123",
         "PayToAccount": "EE471000001020145685",
         "PayToName": "Test Seller",
         "PayDueDate": "2020-04-30",
@@ -760,6 +760,7 @@ def test_invoice_sum_group_validation():
             invoice_sum=123.123,
             currency="US Dollar",
             total_to_pay=0,
+            total_vat_sum=-5,
             vat=ItemEntry(description="Test to break"),
         )
     assert {
@@ -767,6 +768,7 @@ def test_invoice_sum_group_validation():
         "InvoiceSum": ["must be of decimal type"],
         "Currency": ["max length is 3", "value does not match regex '[A-Z][A-Z][A-Z]'"],
         "TotalToPay": ["must be of decimal type"],
+        "TotalVATSum": ["must be of decimal type"],
         "VAT": ["must be of vat type"],
     } == ast.literal_eval(str(validation_error.value))
 
@@ -779,6 +781,7 @@ def test_invoice_sum_group_validation():
         invoice_sum=Decimal("123.1233"),
         currency="USD",
         total_to_pay=Decimal("0.00"),
+        total_vat_sum=Decimal("0.00"),
         vat=vat,
     )
     assert invoice_sum_group.elements == {
@@ -786,6 +789,7 @@ def test_invoice_sum_group_validation():
         "InvoiceSum": Decimal("123.1233"),
         "Currency": "USD",
         "TotalToPay": Decimal("0.00"),
+        "TotalVATSum": Decimal("0.00"),
         "VAT": vat,
     }
 
