@@ -2,7 +2,7 @@ from estonian_e_invoice.validation.validation_schema_types import *
 
 HEADER_SCHEMA = {
     "Date": DATE_STRING_TYPE_REQUIRED,
-    "FileID": SHORT_STRING_TYPE_REQUIRED,
+    "FileId": SHORT_STRING_TYPE_REQUIRED,
     "Version": SHORT_STRING_TYPE_REQUIRED,
 }
 
@@ -28,7 +28,7 @@ PAYMENT_INFO_SCHEMA = {
     },
     "PaymentTotalSum": DECIMAL_TYPE_TWO_DECIMAL_PLACES_REQUIRED,
     "PayerName": NORMAL_STRING_TYPE_REQUIRED,
-    "PaymentID": NORMAL_STRING_TYPE_REQUIRED,
+    "PaymentId": NORMAL_STRING_TYPE_REQUIRED,
     "PayToAccount": ACCOUNT_TYPE_REQUIRED,
     "PayToName": NORMAL_STRING_TYPE_REQUIRED,
     "PayDueDate": DATE_STRING_TYPE,
@@ -105,6 +105,7 @@ INVOICE_SUM_GROUP_SCHEMA = {
     "Currency": CURRENCY_TYPE,
     "TotalToPay": DECIMAL_TYPE_TWO_DECIMAL_PLACES,
     "VAT": VAT_TYPE,
+    "TotalVATSum": DECIMAL_TYPE_TWO_DECIMAL_PLACES,
 }
 
 INVOICE_ITEM_SCHEMA = {

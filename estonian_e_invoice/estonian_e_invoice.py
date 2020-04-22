@@ -11,22 +11,21 @@ class XMLGenerator:
     """
     Generate string representation of XML element.
     """
-    root = ElementTree.Element("E_Invoice")
     encoding = "utf-8"
 
     def __init__(self, header: "Header", footer: "Footer", invoice: "Invoice") -> None:
+        self.root = ElementTree.Element("E_Invoice")
         self.header = header
         self.footer = footer
         self.invoice = invoice
 
-    @classmethod
-    def to_string(cls, prettify: bool) -> Union[ByteString, str]:
+    def to_string(self, prettify: bool) -> Union[ByteString, str]:
         """
         A ByteString is returned if prettified, otherwise str.
 
         Returns an (optionally prettified) encoded string containing the XML data.
         """
-        rough_string = ElementTree.tostring(cls.root, cls.encoding)
+        rough_string = ElementTree.tostring(self.root, self.encoding)
 
         if not prettify:
             return rough_string
@@ -34,10 +33,9 @@ class XMLGenerator:
         re_parsed = minidom.parseString(rough_string)
         return re_parsed.toprettyxml(indent="  ")
 
-    @classmethod
-    def set_root_attrs(cls) -> None:
-        cls.root.set("xsi:noNamespaceSchemaLocation", "e-invoice_ver1.2.xsd")
-        cls.root.set("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance")
+    def set_root_attrs(self) -> None:
+        self.root.set("xsi:noNamespaceSchemaLocation", "e-invoice_ver1.2.xsd")
+        self.root.set("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance")
 
     def add_nodes_to_root(self) -> None:
         self.root.extend(

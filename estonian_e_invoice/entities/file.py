@@ -26,7 +26,7 @@ class Header(Node):
 
     def __init__(self, date: str, file_id: str,) -> None:
         self.elements = self.validate(
-            {"Date": date, "FileID": file_id, "Version": E_INVOICE_VERSION,}
+            {"Date": date, "FileId": file_id, "Version": E_INVOICE_VERSION,}
         )
 
 

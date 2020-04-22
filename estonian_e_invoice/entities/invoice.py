@@ -41,11 +41,11 @@ class VAT(Node):
     ) -> None:
         self.elements = self.validate(
             {
+                "SumBeforeVAT": sum_before_vat,
                 "VATRate": vat_rate,
                 "VATSum": vat_sum,
-                "SumBeforeVAT": sum_before_vat,
-                "SumAfterVAT": sum_after_vat,
                 "Currency": currency,
+                "SumAfterVAT": sum_after_vat,
             }
         )
 
@@ -159,9 +159,9 @@ class InvoiceInformation(Node):
         self.elements = self.validate(
             {
                 "Type": invoice_type,
+                "DocumentName": document_name,
                 "InvoiceNumber": invoice_number,
                 "InvoiceDate": invoice_date,
-                "DocumentName": document_name,
                 "DueDate": due_date,
                 "FineRatePerDay": fine_rate_per_day,
             }
@@ -216,10 +216,10 @@ class ItemEntry(Node):
         self.elements = self.validate(
             {
                 "Description": description,
+                "ItemDetailInfo": item_detail_info,
                 "ItemSum": item_sum,
                 "VAT": vat,
                 "ItemTotal": item_total,
-                "ItemDetailInfo": item_detail_info,
             }
         )
 
@@ -248,6 +248,7 @@ class InvoiceSumGroup(Node):
         total_to_pay: Amount to be paid. Credit invoice must have 0.00.
                       Negative amounts does not correspond to the Estonian legislation.
         vat: Describes value-added tax.
+        total_vat_sum: Total of all VAT sums.
     """
 
     tag = "InvoiceSumGroup"
@@ -260,14 +261,16 @@ class InvoiceSumGroup(Node):
         currency: Optional[str] = None,
         total_to_pay: Optional[Decimal] = None,
         vat: Optional[VAT] = None,
+        total_vat_sum: Optional[Decimal] = None,
     ) -> None:
         self.elements = self.validate(
             {
-                "TotalSum": total_sum,
                 "InvoiceSum": invoice_sum,
+                "VAT": vat,
+                "TotalVATSum": total_vat_sum,
+                "TotalSum": total_sum,
                 "Currency": currency,
                 "TotalToPay": total_to_pay,
-                "VAT": vat,
             }
         )
 
