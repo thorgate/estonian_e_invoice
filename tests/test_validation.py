@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-"""Tests for `estonian_e_invoice` package."""
+"""Test for validators"""
 
 import ast
 from datetime import datetime

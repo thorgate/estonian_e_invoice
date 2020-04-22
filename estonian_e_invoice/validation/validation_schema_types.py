@@ -1,3 +1,16 @@
+"""
+Validation schema types for Cerberus validator.
+
+They are based on the variable type definitions in the e-invoice document.
+
+For further understanding and improvements on the schema types, you might
+check the following references.
+
+Reference for Cerberus: https://docs.python-cerberus.org/en/stable/
+Reference for the document: https://wp.itl.ee/files/Estonian_e-invoice_description_ver1.2_eng.pdf
+"""
+
+
 STRING_TYPE = {
     "type": "string",
     "empty": False,

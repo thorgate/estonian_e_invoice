@@ -6,7 +6,6 @@ from estonian_e_invoice.validation.validation_schemas import (
     HEADER_SCHEMA,
 )
 
-
 """
 The version of the standard used. Further information can be found here:
 https://wp.itl.ee/files/Estonian_e-invoice_description_ver1.2_eng.pdf
