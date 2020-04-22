@@ -173,7 +173,7 @@ def test_payment_info_validation():
             payment_id=66.66,
             pay_to_account=Decimal("111.111"),
             pay_to_name=123123,
-            payment_due_date=None,
+            pay_due_date=None,
         )
     assert {
         "Currency": ["max length is 3", "value does not match regex '[A-Z][A-Z][A-Z]'"],
@@ -195,7 +195,7 @@ def test_payment_info_validation():
         payment_id="123",
         pay_to_account="EE471000001020145685",
         pay_to_name="Test Seller",
-        payment_due_date="2020-04-30",
+        pay_due_date="2020-04-30",
     )
     assert payment_info.elements == {
         "Currency": "EUR",
@@ -208,7 +208,7 @@ def test_payment_info_validation():
         "PaymentID": "123",
         "PayToAccount": "EE471000001020145685",
         "PayToName": "Test Seller",
-        "PaymentDueDate": "2020-04-30",
+        "PayDueDate": "2020-04-30",
     }
 
 
@@ -879,7 +879,7 @@ def test_invoice_validation():
         payment_id="1234",
         pay_to_account="EE909900123456789012",
         pay_to_name="Test seller",
-        payment_due_date="2020-04-30",
+        pay_due_date="2020-04-30",
     )
     invoice = Invoice(
         invoice_id="1234",

@@ -50,7 +50,7 @@ class PaymentInfo(Node):
         payment_id: Invoice number.
         pay_to_account: The beneficiary’s account number.
         pay_to_name: The beneficiary’s name.
-        payment_due_date: Payment due date.
+        pay_due_date: Payment due date.
     """
 
     tag = "PaymentInfo"
@@ -66,7 +66,7 @@ class PaymentInfo(Node):
         payment_id: str,
         pay_to_account: str,
         pay_to_name: str,
-        payment_due_date: Optional[str] = None,
+        pay_due_date: Optional[str] = None,
     ) -> None:
         self.elements = self.validate(
             {
@@ -78,6 +78,6 @@ class PaymentInfo(Node):
                 "PaymentID": payment_id,
                 "PayToAccount": pay_to_account,
                 "PayToName": pay_to_name,
-                "PaymentDueDate": payment_due_date,
+                "PayDueDate": pay_due_date,
             }
         )
