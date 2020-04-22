@@ -10,20 +10,22 @@ class Node:
 
     def validate(self, data: dict) -> dict:
         # Run validations if there is a validation schema
-        if self.validation_schema:
-            from estonian_e_invoice.validation.exceptions import ValidationError
-            from estonian_e_invoice.validation.validators import CustomValidator
+        if not self.validation_schema:
+            raise ValueError("validation_schema has to be defined to run validation")
 
-            validator = CustomValidator(self.validation_schema)
-            # Exclude null and blank values.
-            is_valid = validator.validate(
-                {k: v for k, v in data.items() if v not in (None, "")}
-            )
+        from estonian_e_invoice.validation.exceptions import ValidationError
+        from estonian_e_invoice.validation.validators import CustomValidator
 
-            if is_valid:
-                return validator.document
-            else:
-                raise ValidationError(validator.errors)
+        validator = CustomValidator(self.validation_schema)
+        # Exclude null and blank values.
+        is_valid = validator.validate(
+            {k: v for k, v in data.items() if v not in (None, "")}
+        )
+
+        if is_valid:
+            return validator.document
+        else:
+            raise ValidationError(validator.errors)
 
     @classmethod
     def set_attrs(cls, element: Element, attributes: dict) -> None:
