@@ -1,5 +1,5 @@
 """Main module."""
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, ByteString, Union
 from xml.dom import minidom
 from xml.etree import ElementTree
 
@@ -8,30 +8,43 @@ if TYPE_CHECKING:
 
 
 class XMLGenerator:
+    """
+    Generate string representation of XML element.
+    """
+    root = ElementTree.Element("E_Invoice")
+    encoding = "utf-8"
+
     def __init__(self, header: "Header", footer: "Footer", invoice: "Invoice") -> None:
         self.header = header
         self.footer = footer
         self.invoice = invoice
 
-    @staticmethod
-    def prettify(element) -> str:
-        """Return a pretty-printed XML string for the Element."""
-        rough_string = ElementTree.tostring(element, "utf-8")
+    @classmethod
+    def to_string(cls, prettify: bool) -> Union[ByteString, str]:
+        """
+        A ByteString is returned if prettified, otherwise str.
+
+        Returns an (optionally prettified) encoded string containing the XML data.
+        """
+        rough_string = ElementTree.tostring(cls.root, cls.encoding)
+
+        if not prettify:
+            return rough_string
+
         re_parsed = minidom.parseString(rough_string)
         return re_parsed.toprettyxml(indent="  ")
 
-    @staticmethod
-    def set_root_attrs(root) -> None:
-        root.set("xsi:noNamespaceSchemaLocation", "e-invoice_ver1.2.xsd")
-        root.set("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance")
+    @classmethod
+    def set_root_attrs(cls) -> None:
+        cls.root.set("xsi:noNamespaceSchemaLocation", "e-invoice_ver1.2.xsd")
+        cls.root.set("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance")
 
-    def add_nodes_to_root(self, root) -> None:
-        root.extend(
+    def add_nodes_to_root(self) -> None:
+        self.root.extend(
             [self.header.to_etree(), self.invoice.to_etree(), self.footer.to_etree(),]
         )
 
-    def generate(self) -> str:
-        root = ElementTree.Element("E_Invoice")
-        self.set_root_attrs(root)
-        self.add_nodes_to_root(root)
-        return self.prettify(root)
+    def generate(self, prettify=True) -> Union[ByteString, str]:
+        self.set_root_attrs()
+        self.add_nodes_to_root()
+        return self.to_string(prettify)
