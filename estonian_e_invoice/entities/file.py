@@ -20,7 +20,6 @@ class Header(Node):
 
         date: Determines the date when the file is generated.
         file_id: Unique identification of the file. Used to prevent double-processing of the same file.
-        version: The version of the standard used.
     """
 
     tag = "Header"
