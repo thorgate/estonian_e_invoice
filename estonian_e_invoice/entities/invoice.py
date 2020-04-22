@@ -248,6 +248,7 @@ class InvoiceSumGroup(Node):
         total_to_pay: Amount to be paid. Credit invoice must have 0.00.
                       Negative amounts does not correspond to the Estonian legislation.
         vat: Describes value-added tax.
+        total_vat_sum: Total of all VAT sums.
     """
 
     tag = "InvoiceSumGroup"
