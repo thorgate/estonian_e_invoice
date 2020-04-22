@@ -2,10 +2,41 @@ from xml.etree.ElementTree import Element, SubElement
 
 
 class Node:
+    """
+    Represents an XML element.
+
+    This class is the reference implementation of the Element interface.
+
+    The element tag, attribute names, and attribute values are string values.
+
+    Example:
+        tag = "Node"
+        elements = {
+            "Child": "Text",
+        }
+        attributes = {
+            "id": "1",
+        }
+        element_attrs = {
+            "childId": "2",
+        }
+
+        Renders to:
+        <Node id="1">
+            <Child childId="2">
+                Text
+            </Child>
+        </Node>
+    """
+    # XML element's name.
     tag = "Node"
+    # Dictionary of sub XML elements.
     elements = {}
+    # Dictionary of the element's attributes.
     attributes = {}
+    # Dictionary of sub elements' attributes.
     element_attrs = {}
+    # Cerberus validation schema to be used while validating the element.
     validation_schema = None
 
     def validate(self, data: dict) -> dict:
@@ -46,6 +77,8 @@ class Node:
                 for node in value:
                     if isinstance(node, Node):
                         parent.append(node.to_etree())
+                    else:
+                        raise ValueError("Provided value is not an instance of Node class")
             else:
                 child = SubElement(parent, key)
                 self.set_attrs(child, self.element_attrs.get(key, {}))
