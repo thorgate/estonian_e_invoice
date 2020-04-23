@@ -47,8 +47,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'Estonian E-Invoice'
-copyright = "2020, Burak Özdemir"
-author = "Burak Özdemir"
+copyright = "2020, Thorgate"
+author = "Thorgate"
 
 # The version info for the project you're documenting, acts as replacement
 # for |version| and |release|, also used in various other places throughout
@@ -129,7 +129,7 @@ latex_elements = {
 latex_documents = [
     (master_doc, 'estonian_e_invoice.tex',
      'Estonian E-Invoice Documentation',
-     'Burak Özdemir', 'manual'),
+     'Thorgate', 'manual'),
 ]
 
 

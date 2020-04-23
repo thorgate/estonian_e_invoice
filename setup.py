@@ -23,8 +23,8 @@ test_requirements = [
 ]
 
 setup(
-    author="Burak Özdemir",
-    author_email="burakozdemir32@gmail.com",
+    author="Thorgate",
+    author_email="code@thorgate.eu",
     python_requires=">=3.5",
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
@@ -53,7 +53,7 @@ setup(
     setup_requires=setup_requirements,
     test_suite="tests",
     tests_require=test_requirements,
-    url="https://github.com/burakozdemir32/estonian_e_invoice",
+    url="https://github.com/thorgate/estonian_e_invoice",
     version="0.1.0",
     zip_safe=False,
 )
