@@ -23,16 +23,16 @@ deploy:
   user: "__token__"
   password:
     secure: >
-      h24xrEnzM5T4iKhctJFxr0rc23MrcoVIOHw49ULZ489nyvNe4htmVkbwmQRY4qBR+2eEg6vQC+
-      gl6EVvfPz0Zp3Z4jHXfAcs9QiM0hsBYpDpVfy0ri7IcUtk9GTqnsSiisTOFUGbCV/IdIMJiYcB
-      lYyhGDx/AuPPtk4MzL49xSR2DbjJcqoeLnZZ3NQidQrMM3B6UWnYbboWUQZIkl48Qilp3kvBBU
-      ZGq8xlkwolc7isSZqWJTDJyXeJRSxdOHjpf7Ii2GV298cUQ3N+afA4bNbFWeeTsXqnjl7IhHSt
-      PoWPyN/bCJqYNUK188yDJ3m3kts0NB4EBKIYkxU2759M2FXjB2vZj7/Ds1AvqUYXPR6Ilt6l6M
-      6TgQe9I7nPvg+YN/0EmsyjeffWyMI1qDXA8e+Xen94AyrhdNKFmSekG0i3DsE9WoI2MvIHIjvb
-      2mTjxBj7JIV0WEBwKef2Og5awyAOgjMvdjFASCKkoVLypElGxkT3NVQ9Iock7AJtvXugKnwZ/+
-      NyFmk+/jS5kEr2p97dMFNRKFKt6luGsnbTkJFq6TaBEnf7nGGAZsEEPhWFwkAwdNASQsu9oIG7
-      4yvQ4GU/Od95s1XnsSAaQWGy/zuF/ZtInazivKKm4ATGPlyiqcToMkLyBqf8pQ25C7kSGhDKBF
-      1LrKzRzlDL7YwdMeo=
+      DnHIWW+9KIpwXld6gtx5ts93aac2a1livPtMM3Yd60f4Sd4o71n64sngO9aNNNx9hnRegca5uV
+      5f4uSVMHJZPehR6bu2LVujyMi1e0tEzM5TrxffWMXlEgTYThIMNFxUOl/SKfAbkcgtEHT2gX2f
+      edCreCK8RBzi9YxobSbYMI30dqZF2KSHIl9kFz7NOOWZlGz3TGIUVDc/KdIoo56I8SA8zzyaD9
+      uHVwGQQ6gg5pZ97QmogDGiBY5SMsygwTblvCsE2s7M6hlOHF+pfnz5dpPYSJhaRBqznY1/UjBO
+      +KOoG/rnh3n5c0U2EAdez6u/SUqCiFkFPm1YXvLomX+bOhCj3FDeeq1aqzfzp2RQWe3Bz6JHgA
+      PYf2GGSumQ3jBMJXIhUdAt5JL4JKEK4iNnANr/s8liiL+prcI2SyiJnjrLDeMRZzYriMVtSRnk
+      8DURH2f6EDdvk6sfK3V1hRXE+HRLxtG2Xk0HkhHLn1N6S2rgG9BAkSsTsdDAUdT7ujpnOY2QUo
+      WHKOUR8cDX43J40w4gd6JvQZKzjA9X1CDChEFFfw4Cy6KYLzqEZMndCyByV3cVBCpRHiIkyLVa
+      MnH3IQuzlUFYhPPYqVPFgSQYvFMljS8mvMWCKpZwedYyB02biNzoXXd0o2VW9k4+K1RrGc8Sq/
+      lhg2BlLZ702ajTXjA=
   on:
     tags: true
     repo: thorgate/estonian_e_invoice
