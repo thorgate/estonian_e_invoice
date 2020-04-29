@@ -20,7 +20,7 @@ script: tox
 deploy:
   provider: pypi
   distributions: sdist bdist_wheel
-  user: thorgate
+  user: "__token__"
   password:
     secure: >
       h24xrEnzM5T4iKhctJFxr0rc23MrcoVIOHw49ULZ489nyvNe4htmVkbwmQRY4qBR+2eEg6vQC+
