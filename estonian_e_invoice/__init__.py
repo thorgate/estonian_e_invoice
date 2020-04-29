@@ -2,7 +2,7 @@
 
 __author__ = """Thorgate"""
 __email__ = "code@thorgate.eu"
-__version__ = "1.0.0"
+__version__ = '1.0.1'
 
 
 from estonian_e_invoice.estonian_e_invoice import XMLGenerator
