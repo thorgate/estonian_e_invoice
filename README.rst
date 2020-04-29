@@ -7,7 +7,7 @@ Estonian E-Invoice
         :target: https://pypi.python.org/pypi/estonian_e_invoice
 
 .. image:: https://img.shields.io/travis/thorgate/estonian_e_invoice.svg
-        :target: https://travis-ci.com/thorgate/estonian_e_invoice
+        :target: https://travis-ci.org/thorgate/estonian_e_invoice
 
 .. image:: https://readthedocs.org/projects/estonian-e-invoice/badge/?version=latest
         :target: https://estonian-e-invoice.readthedocs.io/en/latest/?badge=latest
