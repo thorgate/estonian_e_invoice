@@ -20,10 +20,20 @@ script: tox
 deploy:
   provider: pypi
   distributions: sdist bdist_wheel
-  user: burakozdemir
+  user: thorgate
   password:
-    secure: xaVtS4KEhUDxdycpef3Cks/t695W03440nSzclc1t/yOcXnGzYXMYdaLuPCu9rAVAPGuur52n4usONRmW8f6rVYxLyxd+SnNwwkK58QY4E7sQhlUCkgUTDWxyfj+FYpBURqIxsP7HUb6qkmn2ewsvNnN5+yqbXhBcbuGOAsDOBFI465dBVAz/le+ncOFmI6HpVXA5y9v76zubb0UlTVU0fOTushenyp+OqJHdyxOw+RVlhADUC1VzqtmvXO0hCWwqCZbZ/mgn1iz7A3JrHu32kwBDMo1eHIyxU3oOY+N1J8wezl3ry2M8fD2jJvJx9xfv5nTubAvwr8lAwxmCMfT+r2A20QpVPr2dSzJsbLNL4w8F1vJU5+IfGsBcOzmgh0PhznDYQNWtFHv7IbtvlPs9sd1/qreqLUiUe3WIxCvZXnDYqO1wuTmVEUJ3JViF9N04f8bY7/mYvvmJLQc6RHMcohwT2IofpA93AdlW2yJDZMusQq0+q341mTDPj4NhEHK4ViXPTTWUnAVjKXX/m07uA283uOrdalvjE4KyEO9JoNZAD+m28xr2lyXVQBC/YObOKQJtcEr3zgG6va7hURalA7BipRQubA9oa3Gvz6nzSiOkxs4Z9rQxaOEe46pX5OQfQDLnTj/tX+cZsSKNHaXzbzs+8W9uRxNfbIWqld0wwQ=
+    secure: >
+      h24xrEnzM5T4iKhctJFxr0rc23MrcoVIOHw49ULZ489nyvNe4htmVkbwmQRY4qBR+2eEg6vQC+
+      gl6EVvfPz0Zp3Z4jHXfAcs9QiM0hsBYpDpVfy0ri7IcUtk9GTqnsSiisTOFUGbCV/IdIMJiYcB
+      lYyhGDx/AuPPtk4MzL49xSR2DbjJcqoeLnZZ3NQidQrMM3B6UWnYbboWUQZIkl48Qilp3kvBBU
+      ZGq8xlkwolc7isSZqWJTDJyXeJRSxdOHjpf7Ii2GV298cUQ3N+afA4bNbFWeeTsXqnjl7IhHSt
+      PoWPyN/bCJqYNUK188yDJ3m3kts0NB4EBKIYkxU2759M2FXjB2vZj7/Ds1AvqUYXPR6Ilt6l6M
+      6TgQe9I7nPvg+YN/0EmsyjeffWyMI1qDXA8e+Xen94AyrhdNKFmSekG0i3DsE9WoI2MvIHIjvb
+      2mTjxBj7JIV0WEBwKef2Og5awyAOgjMvdjFASCKkoVLypElGxkT3NVQ9Iock7AJtvXugKnwZ/+
+      NyFmk+/jS5kEr2p97dMFNRKFKt6luGsnbTkJFq6TaBEnf7nGGAZsEEPhWFwkAwdNASQsu9oIG7
+      4yvQ4GU/Od95s1XnsSAaQWGy/zuF/ZtInazivKKm4ATGPlyiqcToMkLyBqf8pQ25C7kSGhDKBF
+      1LrKzRzlDL7YwdMeo=
   on:
     tags: true
-    repo: burakozdemir32/estonian_e_invoice
+    repo: thorgate/estonian_e_invoice
     python: 3.8

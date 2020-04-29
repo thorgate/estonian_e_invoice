@@ -32,13 +32,13 @@ You can either clone the public repository:
 
 .. code-block:: console
 
-    $ git clone git://github.com/burakozdemir32/estonian_e_invoice
+    $ git clone git://github.com/thorgate/estonian_e_invoice
 
 Or download the `tarball`_:
 
 .. code-block:: console
 
-    $ curl -OJL https://github.com/burakozdemir32/estonian_e_invoice/tarball/master
+    $ curl -OJL https://github.com/thorgate/estonian_e_invoice/tarball/master
 
 Once you have a copy of the source, you can install it with:
 
@@ -47,5 +47,5 @@ Once you have a copy of the source, you can install it with:
     $ python setup.py install
 
 
-.. _Github repo: https://github.com/burakozdemir32/estonian_e_invoice
-.. _tarball: https://github.com/burakozdemir32/estonian_e_invoice/tarball/master
+.. _Github repo: https://github.com/thorgate/estonian_e_invoice
+.. _tarball: https://github.com/thorgate/estonian_e_invoice/tarball/master

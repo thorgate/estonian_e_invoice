@@ -5,9 +5,10 @@ Credits
 Development Lead
 ----------------
 
-* Burak Özdemir <burakozdemir32@gmail.com>
+* Thorgate <code@thorgate.eu>
 
 Contributors
 ------------
 
-None yet. Why not be the first?
+* Burak Özdemir <burak@thorgate.eu>
+
